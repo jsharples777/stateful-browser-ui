@@ -33,7 +33,6 @@ export {
     ViewPrefs,
     RowPosition,
     CarouselDOMConfig,
-    //collectionSorter,
     TabularViewDOMConfig,
     TabDOMConfig,
     ActionType,
@@ -45,6 +44,8 @@ export {
     ListViewRuntimeConfig,
     CollectionViewSorter,
     CollectionViewSorterDirection,
+    ItemEvent,
+    EXTRA_ACTION_ATTRIBUTE_NAME
 } from './ConfigurationTypes'
 
 
@@ -122,6 +123,7 @@ export {CollectionViewRenderer} from './view/interface/CollectionViewRenderer'
 export {CollectionViewEventHandler} from './view/interface/CollectionViewEventHandler'
 export {DetailViewRenderer} from './view/interface/DetailViewRenderer'
 export {ObjectPermissionChecker} from './view/interface/ObjectPermissionChecker'
+export {ViewVisibility} from './view/interface/ViewVisibility'
 
 export {DefaultItemView} from './view/item/DefaultItemView'
 export {ItemView} from './view/item/ItemView'

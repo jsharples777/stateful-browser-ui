@@ -1,5 +1,5 @@
 export { ExtraAction, UIFieldType, FieldLabel, DescriptionText, rendererFn, defaultGetValue, FieldUIConfig, FieldGroup, AttributeFieldMapItem, ModifierClasses, IconClasses, BasicButtonElement, BasicElement, DRAGGABLE_TYPE, DRAGGABLE_KEY_ID, DRAGGABLE_FROM, Droppable, Draggable, ItemEventType, FieldRuntimeConfig, ElementLocation, } from './CommonTypes';
-export { ContentDetail, Modifier, ViewDOMConfig, CollectionViewDOMConfig, SidebarLocation, SidebarPrefs, SidebarViewConfig, ViewPrefs, RowPosition, CarouselDOMConfig, TabularViewDOMConfig, TabDOMConfig, ActionType, SCREEN_WIDTH_LARGE, SCREEN_WIDTH_SMALL, SCREEN_WIDTH_MEDIUM, DetailViewRuntimeConfig, TableViewRuntimeConfig, ListViewRuntimeConfig, CollectionViewSorter, CollectionViewSorterDirection, } from './ConfigurationTypes';
+export { ContentDetail, Modifier, ViewDOMConfig, CollectionViewDOMConfig, SidebarLocation, SidebarPrefs, SidebarViewConfig, ViewPrefs, RowPosition, CarouselDOMConfig, TabularViewDOMConfig, TabDOMConfig, ActionType, SCREEN_WIDTH_LARGE, SCREEN_WIDTH_SMALL, SCREEN_WIDTH_MEDIUM, DetailViewRuntimeConfig, TableViewRuntimeConfig, ListViewRuntimeConfig, CollectionViewSorter, CollectionViewSorterDirection, ItemEvent, EXTRA_ACTION_ATTRIBUTE_NAME } from './ConfigurationTypes';
 export { jsxCreateFragment, jsxCreateElement } from './jsx/JSXParser';
 export { AlertListener, AlertEvent, AlertType } from './alert/AlertListener';
 export { AlertManager } from './alert/AlertManager';
@@ -47,6 +47,7 @@ export { CollectionViewRenderer } from './view/interface/CollectionViewRenderer'
 export { CollectionViewEventHandler } from './view/interface/CollectionViewEventHandler';
 export { DetailViewRenderer } from './view/interface/DetailViewRenderer';
 export { ObjectPermissionChecker } from './view/interface/ObjectPermissionChecker';
+export { ViewVisibility } from './view/interface/ViewVisibility';
 export { DefaultItemView } from './view/item/DefaultItemView';
 export { ItemView } from './view/item/ItemView';
 export { ItemViewListener } from './view/item/ItemViewListener';
