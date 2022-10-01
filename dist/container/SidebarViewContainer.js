@@ -66,7 +66,7 @@ export class SidebarViewContainer {
         if (browserUtil.isMobileDevice()) {
             size = '100%';
         }
-        console.log(`size: ${size}, agent: ${navigator.userAgent}`);
+        sbvcLogger(`size: ${size}, agent: ${navigator.userAgent}`);
         this.showHide(size);
         this.views.forEach((view) => {
             view.show();
