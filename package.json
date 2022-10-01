@@ -1,6 +1,6 @@
 {
   "name": "stateful-browser-ui",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "description": "A simple UI framework for stateful UI components using my state management library",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
