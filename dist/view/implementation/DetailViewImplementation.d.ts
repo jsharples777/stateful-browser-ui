@@ -1,0 +1,31 @@
+import { AbstractView } from "./AbstractView";
+import { DetailView } from "../interface/DetailView";
+import { DetailViewRenderer } from "../interface/DetailViewRenderer";
+import { DetailViewListener } from "../interface/DetailViewListener";
+import { DetailViewRuntimeConfig, ViewDOMConfig } from "../../ConfigurationTypes";
+export declare class DetailViewImplementation extends AbstractView implements DetailView {
+    protected currentItem: any | null;
+    protected renderer: DetailViewRenderer;
+    constructor(uiConfig: ViewDOMConfig, renderer: DetailViewRenderer);
+    addEventDetailListener(listener: DetailViewListener): void;
+    getItemId(name: string, item: any): string;
+    getItemDescription(name: string, item: any): string;
+    hasActionPermission(actionName: string, from: string, item: any): boolean;
+    getItem(from: string, identifier: string): any;
+    clearDisplay(): void;
+    clearReadOnly(): void;
+    setReadOnly(): void;
+    isReadOnly(): boolean;
+    createItem(dataObj: any | null): any;
+    displayItem(dataObj: any): void;
+    hide(): void;
+    show(): void;
+    render(): void;
+    onDocumentLoaded(): void;
+    hasPermissionToDeleteItem(item: any): boolean;
+    hasPermissionToUpdateItem(item: any): boolean;
+    handleActionItem(actionName: string, selectedItem: any): void;
+    isDisplayingItem(dataObj: any): boolean;
+    hasChanged(): boolean;
+    initialise(runtimeConfig: DetailViewRuntimeConfig): void;
+}

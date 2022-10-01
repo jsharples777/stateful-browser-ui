@@ -1,0 +1,30 @@
+import { AbstractStatefulCollectionView } from "../view/implementation/AbstractStatefulCollectionView";
+import { View } from "../view/interface/View";
+import { ChatUserEventListener, StateManager } from "browser-state-management";
+import { CollectionViewDOMConfig, Modifier } from "../ConfigurationTypes";
+export declare class UserSearchView extends AbstractStatefulCollectionView implements ChatUserEventListener {
+    static fastSearchInputId: string;
+    static dataLimit: number;
+    static DOMConfig: CollectionViewDOMConfig;
+    private static _instance;
+    protected loggedInUsers: string[];
+    protected localisedSM: StateManager;
+    private constructor();
+    static getInstance(stateManager: StateManager): UserSearchView;
+    handleLoggedInUsersUpdated(usernames: string[]): void;
+    handleFavouriteUserLoggedIn(username: string): void;
+    handleFavouriteUserLoggedOut(username: string): void;
+    handleFavouriteUsersChanged(usernames: string[]): void;
+    handleBlockedUsersChanged(usernames: string[]): void;
+    onDocumentLoaded(): void;
+    getIdForItemInNamedCollection(name: string, item: any): any;
+    renderDisplayForItemInNamedCollection(containerEl: HTMLElement, name: string, item: any): void;
+    getModifierForItemInNamedCollection(name: string, item: any): Modifier.normal | Modifier.inactive;
+    getSecondaryModifierForItemInNamedCollection(name: string, item: any): Modifier.normal | Modifier.active | Modifier.warning;
+    eventUserSelected(event: Event, ui: any): void;
+    updateViewForNamedCollection(name: string, newState: any): void;
+    itemAction(view: View, actionName: string, selectedItem: any): void;
+    compareItemsForEquality(item1: any, item2: any): boolean;
+    itemDeleted(view: View, selectedItem: any): void;
+    itemSelected(view: View, selectedItem: any): void;
+}

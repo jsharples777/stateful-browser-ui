@@ -1,0 +1,1 @@
+{"version":3,"file":"BasicFormImplementation.js","sourceRoot":"","sources":["../../src/form/BasicFormImplementation.ts"],"names":[],"mappings":"AACA,OAAO,EAAC,eAAe,EAAC,MAAM,8BAA8B,CAAC;AAI7D,MAAM,OAAO,uBAAwB,SAAQ,eAAe;IAExD,YAAmB,WAAmB,EAAE,UAAgC,EAAE,YAAkC,EAAE,iBAA6C,EAAE,qBAA8B,KAAK;QAC5L,KAAK,CAAC,WAAW,EAAE,UAAU,EAAE,YAAY,EAAE,iBAAiB,EAAE,kBAAkB,CAAC,CAAC;IACxF,CAAC;CAEJ"}

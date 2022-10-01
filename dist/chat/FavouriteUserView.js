@@ -1,0 +1,192 @@
+import debug from 'debug';
+import { AbstractStatefulCollectionView } from "../view/implementation/AbstractStatefulCollectionView";
+import { ListViewRenderer } from "../view/renderer/ListViewRenderer";
+import { DRAGGABLE, STATE_NAMES, VIEW_NAME } from "./ChatTypes";
+import { ChatManager, KeyType, NotificationController } from "browser-state-management";
+import { Modifier } from "../ConfigurationTypes";
+const vLogger = debug('user-search-sidebar');
+const vLoggerDetail = debug('user-search-sidebar:detail');
+export class FavouriteUserView extends AbstractStatefulCollectionView {
+    constructor(stateManager) {
+        super(FavouriteUserView.DOMConfig, stateManager, STATE_NAMES.users);
+        this.renderer = new ListViewRenderer(this, this);
+        // handler binding
+        this.handleLoggedInUsersUpdated = this.handleLoggedInUsersUpdated.bind(this);
+        this.handleFavouriteUserLoggedIn = this.handleFavouriteUserLoggedIn.bind(this);
+        this.handleFavouriteUserLoggedOut = this.handleFavouriteUserLoggedOut.bind(this);
+        this.handleFavouriteUsersChanged = this.handleFavouriteUsersChanged.bind(this);
+        this.handleBlockedUsersChanged = this.handleBlockedUsersChanged.bind(this);
+        this.handleLoggedInUsersUpdated = this.handleLoggedInUsersUpdated.bind(this);
+        NotificationController.getInstance().addUserListener(this);
+    }
+    static getInstance(stateManager) {
+        if (!(FavouriteUserView._instance)) {
+            FavouriteUserView._instance = new FavouriteUserView(stateManager);
+        }
+        return FavouriteUserView._instance;
+    }
+    onDocumentLoaded() {
+        super.onDocumentLoaded();
+        this.addEventCollectionListener(this);
+    }
+    handleLoggedInUsersUpdated(usernames) {
+        vLogger(`Received new list of users who are logged in `);
+        this.updateViewForNamedCollection('', {});
+    }
+    handleFavouriteUserLoggedIn(username) {
+        vLogger(`Handle Favourite User ${username} logged in`);
+        this.updateViewForNamedCollection('', {});
+    }
+    handleFavouriteUserLoggedOut(username) {
+        vLogger(`Handle Favourite User ${username} logged in`);
+        this.updateViewForNamedCollection('', {});
+    }
+    handleFavouriteUsersChanged(usernames) {
+        vLogger(`Handle Favourite Users changed to ${usernames}`);
+        this.updateViewForNamedCollection('', {});
+    }
+    getIdForItemInNamedCollection(name, item) {
+        return item._id;
+    }
+    renderDisplayForItemInNamedCollection(containerEl, name, item) {
+        containerEl.innerHTML = item.username;
+    }
+    getModifierForItemInNamedCollection(name, item) {
+        let result = Modifier.normal;
+        // if the user is currently logged out make the item inactive
+        if (!ChatManager.getInstance().isUserLoggedIn(item.username)) {
+            result = Modifier.inactive;
+        }
+        return result;
+    }
+    getSecondaryModifierForItemInNamedCollection(name, item) {
+        let result = Modifier.normal;
+        vLoggerDetail(`Checking for item secondary modifiers ${item.username}`);
+        // if the user is in the black list then show warning and a favourite user is highlighted
+        if (NotificationController.getInstance().isFavouriteUser(item.username)) {
+            vLoggerDetail(`is favourite`);
+            result = Modifier.active;
+        }
+        if (NotificationController.getInstance().isBlockedUser(item.username)) {
+            vLoggerDetail(`is blocked`);
+            result = Modifier.warning;
+        }
+        return result;
+    }
+    updateViewForNamedCollection(name, newState) {
+        var _a;
+        // find the blocked users in the user list
+        let favUsers = [];
+        const users = (_a = this.stateManager) === null || _a === void 0 ? void 0 : _a.getStateByName(STATE_NAMES.users);
+        if (users) {
+            users.forEach((user) => {
+                if (ChatManager.getInstance().isUserInFavouriteList(user.username)) {
+                    favUsers.push(user);
+                }
+            });
+        }
+        super.updateViewForNamedCollection(name, favUsers);
+    }
+    documentLoaded(view) {
+    }
+    handleBlockedUsersChanged(usernames) {
+        this.updateViewForNamedCollection('', {});
+    }
+    hideRequested(view) {
+    }
+    itemAction(view, actionName, selectedItem) {
+        // @ts-ignore
+        if (actionName === this.collectionUIConfig.extraActions[0].name) {
+            if (ChatManager.getInstance().isUserInBlockedList(selectedItem.username)) {
+                vLogger(`${selectedItem.username} already in fav list, ignoring`);
+                return;
+            }
+            ChatManager.getInstance().addUserToBlockedList(selectedItem.username);
+        }
+    }
+    canDeleteItem(view, selectedItem) {
+        return true;
+    }
+    itemDeleted(view, selectedItem) {
+        vLogger(`Favourite user ${selectedItem.username} with id ${selectedItem.id} deleted - removing`);
+        ChatManager.getInstance().removeUserFromFavouriteList(selectedItem.username);
+    }
+    itemDragStarted(view, selectedItem) {
+    }
+    itemDeselected(view, selectedItem) {
+    }
+    itemDropped(view, droppedItem) {
+        vLogger(`Handling item dropped ${droppedItem.username}`);
+        if (ChatManager.getInstance().isUserInFavouriteList(droppedItem.username)) {
+            vLogger(`${droppedItem.username} already in fav list, ignoring`);
+            return;
+        }
+        // add the user to the Chat Manager and we should get an event about it
+        ChatManager.getInstance().addUserToFavouriteList(droppedItem.username);
+    }
+    itemSelected(view, selectedItem) {
+        const roomName = NotificationController.getInstance().startChatWithUser(selectedItem.username);
+    }
+    showRequested(view) {
+    }
+    canSelectItem(view, selectedItem) {
+        return true;
+    }
+}
+FavouriteUserView.DOMConfig = {
+    viewConfig: {
+        resultsContainerId: 'favouriteUsers',
+        drop: {
+            acceptFrom: [DRAGGABLE.fromUserSearch],
+            acceptTypes: [DRAGGABLE.typeUser],
+        },
+        dataSourceId: VIEW_NAME.favouriteUsers,
+    },
+    resultsElement: {
+        type: 'a',
+        attributes: [{ name: 'href', value: '#' }],
+        classes: 'list-group-item my-list-item truncate-notification list-group-item-action'
+    },
+    keyId: '_id',
+    keyType: KeyType.string,
+    modifiers: {
+        normal: 'list-group-item-primary',
+        inactive: 'list-group-item-light',
+        active: 'list-group-item-info',
+        warning: 'list-group-item-danger'
+    },
+    icons: {
+        normal: 'fas fa-comment',
+        inactive: 'fas fa-comment',
+        active: 'fas fa-heart',
+        warning: 'fas fa-exclamation-circle'
+    },
+    detail: {
+        containerClasses: 'd-flex w-100 justify-content-between',
+        textElement: {
+            type: 'span',
+            classes: 'mb-1'
+        },
+        select: true,
+        quickDelete: true,
+        delete: {
+            classes: 'btn bg-danger text-white btn-circle btn-sm',
+            iconClasses: 'fas fa-trash-alt',
+        },
+        drag: {
+            type: DRAGGABLE.typeUser,
+            from: DRAGGABLE.fromFavourites
+        },
+    },
+    extraActions: [
+        {
+            name: 'block',
+            button: {
+                classes: 'btn bg-warning text-white btn-circle btn-sm mr-1',
+                iconClasses: 'fas fa-user-slash'
+            },
+            confirm: false
+        }
+    ]
+};
+//# sourceMappingURL=FavouriteUserView.js.map

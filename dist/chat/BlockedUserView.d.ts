@@ -1,0 +1,33 @@
+import { AbstractStatefulCollectionView } from "../view/implementation/AbstractStatefulCollectionView";
+import { CollectionViewListener } from "../view/interface/CollectionViewListener";
+import { View } from '../view/interface/View';
+import { CollectionView } from "../view/interface/CollectionView";
+import { ChatUserEventListener, StateManager } from "browser-state-management";
+import { Modifier } from "../ConfigurationTypes";
+export declare class BlockedUserView extends AbstractStatefulCollectionView implements ChatUserEventListener, CollectionViewListener {
+    private static _instance;
+    private static DOMConfig;
+    private constructor();
+    static getInstance(stateManager: StateManager): BlockedUserView;
+    onDocumentLoaded(): void;
+    canDeleteItem(view: View, selectedItem: any): boolean;
+    documentLoaded(view: View): void;
+    itemDeleted(view: View, selectedItem: any): void;
+    itemSelected(view: View, selectedItem: any): void;
+    itemDragStarted(view: View, selectedItem: any): void;
+    itemAction(view: View, actionName: string, selectedItem: any): void;
+    hideRequested(view: View): void;
+    showRequested(view: View): void;
+    handleLoggedInUsersUpdated(usernames: string[]): void;
+    handleFavouriteUserLoggedIn(username: string): void;
+    handleFavouriteUserLoggedOut(username: string): void;
+    handleFavouriteUsersChanged(usernames: string[]): void;
+    handleBlockedUsersChanged(usernames: string[]): void;
+    renderDisplayForItemInNamedCollection(containerEl: HTMLElement, name: string, item: any): void;
+    getSecondaryModifierForItemInNamedCollection(name: string, item: any): Modifier;
+    getIdForItemInNamedCollection(name: string, item: any): string;
+    updateViewForNamedCollection(name: string, newState: any): void;
+    itemDropped(view: View, droppedItem: any): void;
+    itemDeselected(view: View, selectedItem: any): void;
+    canSelectItem(view: CollectionView, selectedItem: any): boolean;
+}

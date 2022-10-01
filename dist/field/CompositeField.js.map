@@ -1,0 +1,1 @@
+{"version":3,"file":"CompositeField.js","sourceRoot":"","sources":["../../src/field/CompositeField.ts"],"names":[],"mappings":"AAAA,OAAO,EAAC,aAAa,EAAC,MAAM,iBAAiB,CAAC;AAM9C,MAAM,OAAO,UAAW,SAAQ,aAAa;IAEzC,YAAY,IAAqB,EAAE,MAAqB,EAAE,QAAyB,EAAE,OAAyB;QAC1G,KAAK,CAAC,IAAI,EAAE,MAAM,EAAE,QAAQ,EAAE,OAAO,CAAC,CAAC;IAC3C,CAAC;CACJ"}

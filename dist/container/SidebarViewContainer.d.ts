@@ -1,0 +1,33 @@
+import { View } from "../view/interface/View";
+import { CollectionViewListener } from "../view/interface/CollectionViewListener";
+import { CollectionView } from "../view/interface/CollectionView";
+import { ViewContainer } from "./ViewContainer";
+import { ContainerVisibilityListener } from "./ContainerVisibilityListener";
+import { SidebarPrefs, SidebarViewConfig } from "../ConfigurationTypes";
+export declare class SidebarViewContainer implements CollectionViewListener, ViewContainer {
+    protected prefs: SidebarPrefs;
+    protected views: View[];
+    protected bIsShowing: boolean;
+    protected listeners: ContainerVisibilityListener[];
+    constructor(prefs: SidebarPrefs);
+    addVisibilityListener(listener: ContainerVisibilityListener): void;
+    addListener(listener: ContainerVisibilityListener): void;
+    isShowing(): boolean;
+    addView(view: View, config: SidebarViewConfig): void;
+    onDocumentLoaded(): void;
+    hide(): void;
+    show(): void;
+    documentLoaded(view: View): void;
+    itemAction(view: View, actionName: string, selectedItem: any): void;
+    canDeleteItem(view: View, selectedItem: any): boolean;
+    itemDeleted(view: View, selectedItem: any): void;
+    itemDragStarted(view: View, selectedItem: any): void;
+    itemSelected(view: View, selectedItem: any): void;
+    itemDeselected(view: View, selectedItem: any): void;
+    itemDropped(view: View, droppedItem: any): void;
+    showRequested(view: View): void;
+    hideRequested(view: View): void;
+    canSelectItem(view: CollectionView, selectedItem: any): boolean;
+    collectionChanged(view: CollectionView): void;
+    private showHide;
+}

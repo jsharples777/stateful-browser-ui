@@ -1,0 +1,1 @@
+{"version":3,"file":"DefaultFieldPermissionChecker.js","sourceRoot":"","sources":["../../../src/view/item/DefaultFieldPermissionChecker.ts"],"names":[],"mappings":"AAIA,MAAM,OAAO,6BAA6B;IACtC,yBAAyB,CAAC,IAAS;QAC/B,OAAO,IAAI,CAAC;IAChB,CAAC;IAED,wBAAwB,CAAC,OAAY,EAAE,KAAY;QAC/C,OAAO,IAAI,CAAC;IAChB,CAAC;IAED,yBAAyB,CAAC,IAAS;QAC/B,OAAO,IAAI,CAAC;IAChB,CAAC;CAEJ"}
