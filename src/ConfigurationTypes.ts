@@ -13,7 +13,10 @@ import {
 import {DisplayOrder, UndefinedBoolean,KeyType} from "browser-state-management";
 import {ItemView} from "./view/item/ItemView";
 
-
+export const DEFAULT_KEYBINDINGS_ACTION_NAMES = {
+    ok: 'OK',
+    cancel: 'Cancel'
+}
 export type ItemEvent = {
     target: ItemView,
     identifier?: string,

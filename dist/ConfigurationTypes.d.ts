@@ -1,6 +1,10 @@
 import { BasicButtonElement, BasicElement, Draggable, Droppable, ElementLocation, ExtraAction, FieldRuntimeConfig, FieldRuntimeGroup, IconClasses, ItemEventType, ModifierClasses } from "./CommonTypes";
 import { DisplayOrder, UndefinedBoolean, KeyType } from "browser-state-management";
 import { ItemView } from "./view/item/ItemView";
+export declare const DEFAULT_KEYBINDINGS_ACTION_NAMES: {
+    ok: string;
+    cancel: string;
+};
 export declare type ItemEvent = {
     target: ItemView;
     identifier?: string;

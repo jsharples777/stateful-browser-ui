@@ -1,3 +1,7 @@
+export const DEFAULT_KEYBINDINGS_ACTION_NAMES = {
+    ok: 'OK',
+    cancel: 'Cancel'
+};
 export const EXTRA_ACTION_ATTRIBUTE_NAME = 'view-extra-action';
 export var ActionType;
 (function (ActionType) {

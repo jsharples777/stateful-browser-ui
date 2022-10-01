@@ -56,4 +56,18 @@ export { CollectionViewEventHandlerDelegate } from './view/delegate/CollectionVi
 export { CollectionViewEventHandlerDelegateUsingContext } from './view/delegate/CollectionViewEventHandlerDelegateUsingContext';
 export { BasicTableRowImplementation } from './table/BasicTableRowImplementation';
 export { KeyBindingManager } from './key-binding-manager/KeyBindingManager';
+export { FastSearchHelper } from './fast-search/FastSearchHelper';
+export { CollectionViewSelectFilterHelper } from './filter/CollectionViewSelectFilterHelper';
+export { ItemSelector } from './item-selector/ItemSelector';
+export { ItemSelectorEventType } from './item-selector/ItemSelectorListener';
+export { MacroEvaluator } from './macros/MacroEvaluator';
+export { HTMLtoPDFHelper } from './pdf/HTMLtoPDFHelper';
+export { HTMLDOMtoPDFHelper } from './pdf/HTMLDOMtoPDFHelper';
+export { PDFHelper } from './pdf/PDFHelper';
+export { SidebarManager } from './sidebar/SidebarManager';
+export { AbstractCompositeView } from './view/implementation/AbstractCompositeView';
+export { AbstractModalWindow } from './view/implementation/AbstractModalWindow';
+export { ViewLinkerStateChangedListener } from './view-linker/ViewLinkerStateChangedListener';
+export { ViewLinkerItemViewListenerHelper } from './view-linker/ViewLinkerItemViewListenerHelper';
+export { ViewLinkerHelper } from './view-linker/ViewLinkerHelper';
 //# sourceMappingURL=index.js.map

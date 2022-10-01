@@ -170,3 +170,20 @@ export {
 } from './key-binding-manager/KeyActionEventReceiver'
 
 
+export {FastSearchConfig,FastSearchHelper} from './fast-search/FastSearchHelper';
+export {CollectionViewSelectFilterHelper} from './filter/CollectionViewSelectFilterHelper';
+export {ItemSelectorConfig,ItemSelectorSupplier,ItemSelector} from './item-selector/ItemSelector';
+export {ItemSelectorEvent,ItemSelectorEventType,ItemSelectorListener} from './item-selector/ItemSelectorListener';
+export {MacroContextSupplier} from './macros/MacroContextSupplier';
+export {Macro,MacroEvaluator,MacroEvaluatorConfig,customEvaluator} from './macros/MacroEvaluator';
+export {} from './pdf/PDFHelper';
+export {HTMLtoPDFHelper} from './pdf/HTMLtoPDFHelper';
+export {HTMLDOMtoPDFHelper} from './pdf/HTMLDOMtoPDFHelper';
+export {PDFConfig,PDFConfigElement,PDFConfigPage,PDFHelper} from './pdf/PDFHelper';
+export {SidebarManager} from './sidebar/SidebarManager';
+export {AbstractCompositeView} from './view/implementation/AbstractCompositeView';
+export {AbstractModalWindow,ModalWindowConfig} from './view/implementation/AbstractModalWindow';
+export {ViewLinkerStateChangedListener} from './view-linker/ViewLinkerStateChangedListener';
+export {ViewLinkerItemViewListenerHelper} from './view-linker/ViewLinkerItemViewListenerHelper';
+export {ViewLinkerHelper,LinkHelperConfig,ViewLinkerResult} from './view-linker/ViewLinkerHelper';
+
