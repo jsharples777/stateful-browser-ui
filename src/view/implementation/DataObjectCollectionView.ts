@@ -5,34 +5,91 @@ import {AbstractCollectionView} from "./AbstractCollectionView";
 import {CollectionViewListenerForwarder} from "../delegate/CollectionViewListenerForwarder";
 import {View} from "../interface/View";
 import {CollectionViewDOMConfig} from "../../ConfigurationTypes";
-import {DataObject, StateChangeListener, StateManager} from "browser-state-management";
+import {
+    DataObject, DataObjectDefinition,
+    DataObjectListener,
+    ObjectDefinitionRegistry,
+    StateChangeListener,
+    StateManager
+} from "browser-state-management";
 import {DataObjectFactory} from "browser-state-management/dist/model/DataObjectFactory";
+import {AbstractStatefulCollectionView} from "./AbstractStatefulCollectionView";
 
 
 const logger = debug('data-object-collection-view');
 
-export class DataObjectCollectionView extends AbstractCollectionView implements StateChangeListener, CollectionViewListener {
-    protected stateManager: StateManager;
+export class DataObjectCollectionView extends AbstractStatefulCollectionView implements StateChangeListener, CollectionViewListener {
+    protected currentObjects:DataObject[] = [];
 
     protected constructor(uiConfig: CollectionViewDOMConfig, stateManager: StateManager, stateName: string) {
-        super(uiConfig, stateName);
-        this.stateManager = stateManager;
+        super(uiConfig, stateManager,stateName);
+    }
 
-        // state change listening
-        this.stateChanged = this.stateChanged.bind(this);
+    public getDataObject(id:string):DataObject|null {
+        let result:DataObject|null = null;
+        const foundIndex = this.currentObjects.findIndex((obj) => obj.getUniqueId() === id);
+        if (foundIndex >= 0) {
+            result = this.currentObjects[foundIndex];
+        }
+        return result;
+    }
 
-        // setup state listener
-        this.stateManager.addChangeListenerForName(this.collectionName, this);
+    protected removeDataObject(dataObj:DataObject):void {
+        const foundIndex = this.currentObjects.findIndex((obj) => obj.getUniqueId() === dataObj.getUniqueId());
+        if (foundIndex >= 0) {
+            this.currentObjects.splice(foundIndex,1);
+            dataObj.delete();
+        }
+    }
+
+    protected updateDataObject(dataObj:DataObject):void {
+        const foundIndex = this.currentObjects.findIndex((obj) => obj.getUniqueId() === dataObj.getUniqueId());
+        if (foundIndex >= 0) {
+            this.currentObjects.splice(foundIndex,1,dataObj);
+            dataObj.persist();
+        }
+    }
+
+    protected addDataObject(dataObj:DataObject):void {
+        const foundIndex = this.currentObjects.findIndex((obj) => obj.getUniqueId() === dataObj.getUniqueId());
+        if (foundIndex >= 0) {
+            this.currentObjects.splice(foundIndex,1,dataObj);
+        }
+        else {
+            this.currentObjects.push(dataObj);
+        }
+        dataObj.persist();
     }
 
     setFieldValue(objectId: string, fieldId: string, value: any): void {
-        throw new Error('Method not implemented.');
+        const dataObject = this.getDataObject(objectId);
+        if (dataObject) {
+            dataObject.setValue(fieldId,value);
+            dataObject.persist();
+        }
     }
 
-    public getDisplayedCollection(): any[] {
-        return [];
-        //TODO
+    stateChangedItemAdded(managerName: string, name: string, itemAdded: any): void {
+        const dataObj:DataObject = DataObjectFactory.getInstance().createDataObjectFromData(this.collectionName,itemAdded,true);
+        dataObj.setPersisted(true);
+        this.addDataObject(dataObj);
+        super.stateChangedItemAdded(managerName,name,itemAdded);
     }
+
+    stateChangedItemRemoved(managerName: string, name: string, itemRemoved: any): void {
+        const dataObj:DataObject = DataObjectFactory.getInstance().createDataObjectFromData(this.collectionName,itemRemoved,true);
+        dataObj.setPersisted(true);
+        this.removeDataObject(dataObj);
+        super.stateChangedItemRemoved(managerName,name,itemRemoved);
+    }
+
+    stateChangedItemUpdated(managerName: string, name: string, itemUpdated: any, itemNewValue: any): void {
+        const dataObj:DataObject = DataObjectFactory.getInstance().createDataObjectFromData(this.collectionName,itemNewValue,true);
+        dataObj.setPersisted(true);
+        this.updateDataObject(dataObj);
+        super.stateChangedItemUpdated(managerName,name,itemUpdated, itemNewValue);
+    }
+
 
     getIdForItemInNamedCollection(name: string, item: DataObject): string {
         return item.getUniqueId();
@@ -46,112 +103,10 @@ export class DataObjectCollectionView extends AbstractCollectionView implements 
         return item.getDescription();
     }
 
-    public hasActionPermission(actionName: string, from: string, item: any): boolean {
-        return true;
-    }
-
-
-    public onDocumentLoaded() {
-        super.onDocumentLoaded();
-        this.addEventCollectionListener(this);
-    }
-
-    public getItemInNamedCollection(name: string, compareWith: any): any {
-        return this.stateManager.findItemInState(name, compareWith);
-    }
-
-    public stateChanged(managerName: string, name: string, newValue: any): void {
-        logger(`handling state ${name} changed`);
-        logger(newValue);
-        (<CollectionViewListenerForwarder>(this.eventForwarder)).collectionChanged(this);
-        this.updateViewForNamedCollection(name, newValue);
-    }
-
-    stateChangedItemAdded(managerName: string, name: string, itemAdded: any): void {
-        logger(`handling state ${name} new item added`);
-        logger(itemAdded);
-        if (this.stateManager && this.collectionName) this.updateViewForNamedCollection(name, this.stateManager.getStateByName(name));
-    }
-
-    stateChangedItemRemoved(managerName: string, name: string, itemRemoved: any): void {
-        logger(`handling state ${name} new item removed`);
-        logger(itemRemoved);
-        if (this.stateManager && this.collectionName) this.updateViewForNamedCollection(name, this.stateManager.getStateByName(name));
-    }
-
-    stateChangedItemUpdated(managerName: string, name: string, itemUpdated: any, itemNewValue: any): void {
-        logger(`handling state ${name} new item updated`);
-        logger(itemNewValue);
-        if (this.stateManager && this.collectionName) this.updateViewForNamedCollection(name, this.stateManager.getStateByName(name));
-    }
-
-    render(): void {
-        this.updateViewForNamedCollection(this.collectionName, this.stateManager.getStateByName(this.collectionName))
-    }
-
-    show(): void {
-    }
-
-    hide(): void {
-    }
-
-    documentLoaded(view: View): void {
-    }
-
-    hideRequested(view: View): void {
-    }
-
-    itemDragStarted(view: View, selectedItem: any): void {
-    }
-
-    itemDropped(view: View, droppedItem: any): void {
-    }
-
-    showRequested(view: View): void {
-    }
-
-    itemDeselected(view: View, selectedItem: any): void {
-    }
-
-    itemSelected(view: View, selectedItem: any): void {
-    }
-
-    itemAction(view: View, actionName: string, selectedItem: any): void {
-    }
-
-    itemDeleted(view: View, selectedItem: any): void {
-        this.stateManager.removeItemFromState(this.collectionName, selectedItem, false);
-    }
-
-
-    canSelectItem(view: CollectionView, selectedItem: any): boolean {
-        return true;
-    }
-
-    canDeleteItem(view: View, selectedItem: any): boolean {
-        return true;
-    }
-
-    getListenerName(): string {
-        return this.getName();
-    }
-
-    filterResults(managerName: string, name: string, filterResults: any): void {
-    }
-
-    foundResult(managerName: string, name: string, foundItem: any): void {
-    }
-
-    collectionChanged(view: CollectionView): void {
-    }
 
     updateViewForNamedCollection(name: string, newState: any) {
-        /*
-        Convert the state into data objects
-         */
-        const dataObjs: DataObject[] = DataObjectFactory.getInstance().createDataObjectsFromStateNameAndData(name, newState, true);
-
-        super.updateViewForNamedCollection(name, dataObjs);
+        this.currentObjects = DataObjectFactory.getInstance().createDataObjectsFromStateNameAndData(name, newState, true);
+        super.updateViewForNamedCollection(name, this.currentObjects);
     }
 
 
