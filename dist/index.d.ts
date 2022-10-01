@@ -77,7 +77,7 @@ export { CollectionViewEventHandlerDelegateUsingContext } from './view/delegate/
 export { BasicTableRowImplementation } from './table/BasicTableRowImplementation';
 export { KeyBindingManager } from './key-binding-manager/KeyBindingManager';
 export { KeyActionEventReceiver, KeyActionReceiverConfig, KeyActionEventConfig, KeyActionEvent } from './key-binding-manager/KeyActionEventReceiver';
-export { FastSearchConfig, FastSearchHelper } from './fast-search/FastSearchHelper';
+export { FastSearchConfig, FastSearchHelper, labelGenerator, valueGenerator, eventHandler } from './fast-search/FastSearchHelper';
 export { CollectionViewSelectFilterHelper } from './filter/CollectionViewSelectFilterHelper';
 export { ItemSelectorConfig, ItemSelectorSupplier, ItemSelector } from './item-selector/ItemSelector';
 export { ItemSelectorEvent, ItemSelectorEventType, ItemSelectorListener } from './item-selector/ItemSelectorListener';
