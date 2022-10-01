@@ -175,7 +175,7 @@ export {CollectionViewSelectFilterHelper} from './filter/CollectionViewSelectFil
 export {ItemSelectorConfig,ItemSelectorSupplier,ItemSelector} from './item-selector/ItemSelector';
 export {ItemSelectorEvent,ItemSelectorEventType,ItemSelectorListener} from './item-selector/ItemSelectorListener';
 export {MacroContextSupplier} from './macros/MacroContextSupplier';
-export {Macro,MacroEvaluator,MacroEvaluatorConfig,customEvaluator} from './macros/MacroEvaluator';
+export {Macro,MacroEvaluator,MacroEvaluatorConfig,customEvaluator,EvaluationResult} from './macros/MacroEvaluator';
 export {} from './pdf/PDFHelper';
 export {HTMLtoPDFHelper} from './pdf/HTMLtoPDFHelper';
 export {HTMLDOMtoPDFHelper} from './pdf/HTMLDOMtoPDFHelper';
