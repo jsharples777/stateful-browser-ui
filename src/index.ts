@@ -76,6 +76,10 @@ export {UserSearchView} from './chat/UserSearchView';
 export {SidebarViewContainer} from './container/SidebarViewContainer';
 export {TabularViewListener} from './container/TabularViewListener';
 export {TabularViewContainer} from './container/TabularViewContainer';
+export {ContainerVisibilityListener} from "./container/ContainerVisibilityListener";
+export {ViewContainer} from "./container/ViewContainer";
+
+
 export {
     getIdentifier,
     getDescription,
@@ -164,3 +168,5 @@ export {KeyBindingManager} from './key-binding-manager/KeyBindingManager';
 export {
     KeyActionEventReceiver, KeyActionReceiverConfig, KeyActionEventConfig, KeyActionEvent
 } from './key-binding-manager/KeyActionEventReceiver'
+
+

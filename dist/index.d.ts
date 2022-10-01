@@ -17,6 +17,8 @@ export { UserSearchView } from './chat/UserSearchView';
 export { SidebarViewContainer } from './container/SidebarViewContainer';
 export { TabularViewListener } from './container/TabularViewListener';
 export { TabularViewContainer } from './container/TabularViewContainer';
+export { ContainerVisibilityListener } from "./container/ContainerVisibilityListener";
+export { ViewContainer } from "./container/ViewContainer";
 export { getIdentifier, getDescription, actionHandler, hasActionPermission, ContextTypeAction, ContextDefinitionType, ContextDefinition, ContextDetails, ContextualInformationHelper } from './context/ContextualInformationHelper';
 export { Form } from './form/Form';
 export { ItemViewElementFactory, ItemFactoryResponse, ItemViewButtonElements } from './factory/ItemViewElementFactory';
