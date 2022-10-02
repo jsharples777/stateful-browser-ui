@@ -206,9 +206,8 @@ export class ContextualInformationHelper {
             const name = element.getAttribute(ContextualInformationHelper.DISPLAYNAME);
             const id = element.getAttribute(ContextualInformationHelper.IDENTIFIER);
             const desc = element.getAttribute(ContextualInformationHelper.DESCRIPTION);
-            if (type && name && id && desc) {
-                result = { source: source, internalType: type, displayName: name, identifier: id, description: desc };
-            }
+            // @ts-ignore
+            result = { source: source, internalType: type, displayName: name, identifier: id, description: desc };
         }
         else {
             const parent = element.parentElement;
