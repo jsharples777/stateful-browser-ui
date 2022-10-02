@@ -102,7 +102,6 @@ export class BlockedUserView extends AbstractStatefulCollectionView implements C
     }
 
     itemDeleted(view: View, selectedItem: any): void {
-        // @ts-ignore
         vLogger(`Blocked user ${selectedItem.username} with id ${selectedItem.id} deleted - removing`);
         ChatManager.getInstance().removeUserFromBlockedList(selectedItem.username);
     }

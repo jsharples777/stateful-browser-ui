@@ -6,7 +6,7 @@ import {CollectionView} from "../interface/CollectionView";
 import {AlertEvent, AlertType} from "../../alert/AlertListener";
 import {CollectionViewEventDelegate} from "../interface/CollectionViewEventDelegate";
 import {KeyType} from "browser-state-management";
-import {ActionType} from "../../ConfigurationTypes";
+import {ActionType, EXTRA_ACTION_ATTRIBUTE_NAME} from "../../ConfigurationTypes";
 import {ExtraAction} from "../../CommonTypes";
 
 
@@ -145,49 +145,55 @@ export class CollectionViewEventHandlerDelegate implements CollectionViewEventDe
         const context = this.getItemContext(event);
         let itemId = context.itemId;
         const dataSource = context.dataSource;
-        // @ts-ignore
-        const actionName = event.target.getAttribute(EXTRA_ACTION_ATTRIBUTE_NAME);
 
-        // get the action def
-        const uiConfig = this.view.getCollectionUIConfig();
-        let actionConfig: ExtraAction | null = null;
-        if (uiConfig.extraActions) {
-            const foundIndex = uiConfig.extraActions.findIndex((extraAction) => extraAction.name === actionName);
-            if (foundIndex >= 0) actionConfig = uiConfig.extraActions[foundIndex];
-        }
+        if (event.target) {
+            const actionName = (<HTMLElement>event.target).getAttribute(EXTRA_ACTION_ATTRIBUTE_NAME);
 
-        const shouldConfirm = ((actionConfig) && (actionConfig.confirm));
+            // get the action def
+            const uiConfig = this.view.getCollectionUIConfig();
+            let actionConfig: ExtraAction | null = null;
+            if (uiConfig.extraActions) {
+                const foundIndex = uiConfig.extraActions.findIndex((extraAction) => extraAction.name === actionName);
+                if (foundIndex >= 0) actionConfig = uiConfig.extraActions[foundIndex];
+            }
+
+            const shouldConfirm = ((actionConfig) && (actionConfig.confirm));
 
 
-        if (this.view.getCollectionUIConfig().keyType === KeyType.number) { // @ts-ignore
-            itemId = parseInt(itemId);
-        }
-        logger(`view ${this.view.getName()}: Item with id ${itemId} attempting action ${actionName} from ${dataSource}`);
-        let compareWith = {};
-        // @ts-ignore
-        compareWith[this.view.getCollectionUIConfig().keyId] = itemId;
-        logger(compareWith);
+            if (this.view.getCollectionUIConfig().keyType === KeyType.number) { // @ts-ignore
+                itemId = parseInt(itemId);
+            }
+            logger(`view ${this.view.getName()}: Item with id ${itemId} attempting action ${actionName} from ${dataSource}`);
+            let compareWith = {};
+            // @ts-ignore
+            compareWith[this.view.getCollectionUIConfig().keyId] = itemId;
+            logger(compareWith);
 
-        let selectedItem = this.view.getItemInNamedCollection(this.view.getCollectionName(), compareWith);
-        if (selectedItem) {
-            const shouldSelect = (<CollectionViewListenerForwarder>(this.eventForwarder)).canSelectItem(this.view, selectedItem);
-            logger(`view ${this.view.getName()}: Item with id ${itemId} attempting action ${actionName} from ${dataSource} - ${shouldSelect}`);
-            if (shouldSelect) {
-                // do we need to confirm action?
-                if (shouldConfirm) {
-                    AlertManager.getInstance().startAlert(this, this.view.getName(), `${actionName}: please confirm this action`, {
-                        actionType: ActionType.EXTRA_ACTION,
-                        actionName: actionName,
-                        item: selectedItem,
-                        target: event.target
-                    });
-                } else {
-                    this.selectedItem = selectedItem;
-                    logger(selectedItem);
-                    this.eventForwarder.itemAction(this.view, actionName, selectedItem, event.target);
+            let selectedItem = this.view.getItemInNamedCollection(this.view.getCollectionName(), compareWith);
+            if (selectedItem) {
+                const shouldSelect = (<CollectionViewListenerForwarder>(this.eventForwarder)).canSelectItem(this.view, selectedItem);
+                logger(`view ${this.view.getName()}: Item with id ${itemId} attempting action ${actionName} from ${dataSource} - ${shouldSelect}`);
+                if (shouldSelect) {
+                    // do we need to confirm action?
+                    if (shouldConfirm) {
+                        AlertManager.getInstance().startAlert(this, this.view.getName(), `${actionName}: please confirm this action`, {
+                            actionType: ActionType.EXTRA_ACTION,
+                            actionName: actionName,
+                            item: selectedItem,
+                            target: event.target
+                        });
+                    } else {
+                        this.selectedItem = selectedItem;
+                        logger(selectedItem);
+                        if (actionName) {
+                            this.eventForwarder.itemAction(this.view, actionName, selectedItem, event.target);
+                        }
+                    }
                 }
             }
+
         }
+
     }
 
     alertCompleted(event: AlertEvent): void {

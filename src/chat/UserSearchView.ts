@@ -151,7 +151,6 @@ export class UserSearchView extends AbstractStatefulCollectionView implements Ch
 
     onDocumentLoaded() {
         super.onDocumentLoaded();
-        // @ts-ignore
         const fastSearchEl = $(`#${UserSearchView.fastSearchInputId}`);
         // @ts-ignore
         fastSearchEl.on('autocompleteselect', this.eventUserSelected);

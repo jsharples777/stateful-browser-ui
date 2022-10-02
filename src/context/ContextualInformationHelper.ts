@@ -98,7 +98,6 @@ export class ContextualInformationHelper {
     }
 
     public onDocumentLoaded() {
-        // @ts-ignore
         document.addEventListener('click', this.hideContextMenu);
 
         this.menuDivEl = <HTMLDivElement | null>document.getElementById('contextmenu');
@@ -152,9 +151,7 @@ export class ContextualInformationHelper {
         let result: ContextDetails | null = null;
 
         if (event.target) {
-            let target = event.target;
-            // @ts-ignore
-            result = this.findContextFromElement(event.target);
+            result = this.findContextFromElement(<HTMLElement>event.target);
         }
         return result;
     }
@@ -180,8 +177,7 @@ export class ContextualInformationHelper {
         logger(event.target);
         // are we over a context sensitive item?
         // find a context if possible
-        // @ts-ignore
-        const context: ContextDetails | null = this.findContextFromElement(event.target);
+        const context: ContextDetails | null = this.findContextFromElement(<HTMLElement>event.target);
         logger(context);
         if (context && this.buildContextMenu(context)) {
             event.preventDefault();
@@ -294,8 +290,9 @@ export class ContextualInformationHelper {
             const id = element.getAttribute(ContextualInformationHelper.IDENTIFIER);
             const desc = element.getAttribute(ContextualInformationHelper.DESCRIPTION);
 
-            // @ts-ignore
-            result = {source: source, internalType: type, displayName: name, identifier: id, description: desc};
+            if (type && name && id && desc) {
+                result = {source: source, internalType: type, displayName: name, identifier: id, description: desc};
+            }
         } else {
             const parent = element.parentElement;
             if (parent) {
@@ -314,7 +311,6 @@ export class ContextualInformationHelper {
             const name = element.getAttribute(ContextualInformationHelper.DISPLAYNAME);
             const id = element.getAttribute(ContextualInformationHelper.IDENTIFIER);
             const desc = element.getAttribute(ContextualInformationHelper.DESCRIPTION);
-            // @ts-ignore
             if (type && name && id && desc) {
                 let result: ContextDetails = {
                     source: source,
@@ -350,8 +346,8 @@ export class ContextualInformationHelper {
         if (contextDef && contextDef.view && (contextDef.view instanceof AbstractCollectionView)) {
             logger(`collection view context - finding item with identifier ${context.identifier}`);
             let collectionView = <CollectionView>(contextDef.view);
-            let compareWith = {};
-            // @ts-ignore
+            let compareWith:any = {};
+
             compareWith[collectionView.getCollectionUIConfig().keyId] = context.identifier;
 
             selectedItem = collectionView.getItemInNamedCollection(context.internalType, compareWith);

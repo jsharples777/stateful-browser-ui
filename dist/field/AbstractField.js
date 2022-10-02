@@ -69,8 +69,10 @@ export class AbstractField {
     }
     setInvalid(message) {
         this.validationHandler.setValidationStatusAndMessage(this.element, false, '', message, false);
-        // @ts-ignore
-        this.listeners.forEach((listener) => listener.failedValidation(this.formId, this.definition, this.getValue(), message));
+        const value = this.getValue();
+        if (value) {
+            this.listeners.forEach((listener) => listener.failedValidation(this.view, this.definition, value, message));
+        }
     }
     initialise() {
     }

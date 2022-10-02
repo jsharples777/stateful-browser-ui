@@ -1,22 +1,68 @@
 import debug from 'debug';
-import { AbstractCollectionView } from "./AbstractCollectionView";
 import { DataObjectFactory } from "browser-state-management/dist/model/DataObjectFactory";
+import { AbstractStatefulCollectionView } from "./AbstractStatefulCollectionView";
 const logger = debug('data-object-collection-view');
-export class DataObjectCollectionView extends AbstractCollectionView {
+export class DataObjectCollectionView extends AbstractStatefulCollectionView {
     constructor(uiConfig, stateManager, stateName) {
-        super(uiConfig, stateName);
-        this.stateManager = stateManager;
-        // state change listening
-        this.stateChanged = this.stateChanged.bind(this);
-        // setup state listener
-        this.stateManager.addChangeListenerForName(this.collectionName, this);
+        super(uiConfig, stateManager, stateName);
+        this.currentObjects = [];
+    }
+    getDataObject(id) {
+        let result = null;
+        const foundIndex = this.currentObjects.findIndex((obj) => obj.getUniqueId() === id);
+        if (foundIndex >= 0) {
+            result = this.currentObjects[foundIndex];
+        }
+        return result;
+    }
+    removeDataObject(dataObj) {
+        const foundIndex = this.currentObjects.findIndex((obj) => obj.getUniqueId() === dataObj.getUniqueId());
+        if (foundIndex >= 0) {
+            this.currentObjects.splice(foundIndex, 1);
+            dataObj.delete();
+        }
+    }
+    updateDataObject(dataObj) {
+        const foundIndex = this.currentObjects.findIndex((obj) => obj.getUniqueId() === dataObj.getUniqueId());
+        if (foundIndex >= 0) {
+            this.currentObjects.splice(foundIndex, 1, dataObj);
+            dataObj.persist();
+        }
+    }
+    addDataObject(dataObj) {
+        const foundIndex = this.currentObjects.findIndex((obj) => obj.getUniqueId() === dataObj.getUniqueId());
+        if (foundIndex >= 0) {
+            this.currentObjects.splice(foundIndex, 1, dataObj);
+        }
+        else {
+            this.currentObjects.push(dataObj);
+        }
+        dataObj.persist();
     }
     setFieldValue(objectId, fieldId, value) {
-        throw new Error('Method not implemented.');
+        const dataObject = this.getDataObject(objectId);
+        if (dataObject) {
+            dataObject.setValue(fieldId, value);
+            dataObject.persist();
+        }
     }
-    getDisplayedCollection() {
-        return [];
-        //TODO
+    stateChangedItemAdded(managerName, name, itemAdded) {
+        const dataObj = DataObjectFactory.getInstance().createDataObjectFromData(this.collectionName, itemAdded, true);
+        dataObj.setPersisted(true);
+        this.addDataObject(dataObj);
+        super.stateChangedItemAdded(managerName, name, itemAdded);
+    }
+    stateChangedItemRemoved(managerName, name, itemRemoved) {
+        const dataObj = DataObjectFactory.getInstance().createDataObjectFromData(this.collectionName, itemRemoved, true);
+        dataObj.setPersisted(true);
+        this.removeDataObject(dataObj);
+        super.stateChangedItemRemoved(managerName, name, itemRemoved);
+    }
+    stateChangedItemUpdated(managerName, name, itemUpdated, itemNewValue) {
+        const dataObj = DataObjectFactory.getInstance().createDataObjectFromData(this.collectionName, itemNewValue, true);
+        dataObj.setPersisted(true);
+        this.updateDataObject(dataObj);
+        super.stateChangedItemUpdated(managerName, name, itemUpdated, itemNewValue);
     }
     getIdForItemInNamedCollection(name, item) {
         return item.getUniqueId();
@@ -27,87 +73,9 @@ export class DataObjectCollectionView extends AbstractCollectionView {
     getItemDescription(from, item) {
         return item.getDescription();
     }
-    hasActionPermission(actionName, from, item) {
-        return true;
-    }
-    onDocumentLoaded() {
-        super.onDocumentLoaded();
-        this.addEventCollectionListener(this);
-    }
-    getItemInNamedCollection(name, compareWith) {
-        return this.stateManager.findItemInState(name, compareWith);
-    }
-    stateChanged(managerName, name, newValue) {
-        logger(`handling state ${name} changed`);
-        logger(newValue);
-        (this.eventForwarder).collectionChanged(this);
-        this.updateViewForNamedCollection(name, newValue);
-    }
-    stateChangedItemAdded(managerName, name, itemAdded) {
-        logger(`handling state ${name} new item added`);
-        logger(itemAdded);
-        if (this.stateManager && this.collectionName)
-            this.updateViewForNamedCollection(name, this.stateManager.getStateByName(name));
-    }
-    stateChangedItemRemoved(managerName, name, itemRemoved) {
-        logger(`handling state ${name} new item removed`);
-        logger(itemRemoved);
-        if (this.stateManager && this.collectionName)
-            this.updateViewForNamedCollection(name, this.stateManager.getStateByName(name));
-    }
-    stateChangedItemUpdated(managerName, name, itemUpdated, itemNewValue) {
-        logger(`handling state ${name} new item updated`);
-        logger(itemNewValue);
-        if (this.stateManager && this.collectionName)
-            this.updateViewForNamedCollection(name, this.stateManager.getStateByName(name));
-    }
-    render() {
-        this.updateViewForNamedCollection(this.collectionName, this.stateManager.getStateByName(this.collectionName));
-    }
-    show() {
-    }
-    hide() {
-    }
-    documentLoaded(view) {
-    }
-    hideRequested(view) {
-    }
-    itemDragStarted(view, selectedItem) {
-    }
-    itemDropped(view, droppedItem) {
-    }
-    showRequested(view) {
-    }
-    itemDeselected(view, selectedItem) {
-    }
-    itemSelected(view, selectedItem) {
-    }
-    itemAction(view, actionName, selectedItem) {
-    }
-    itemDeleted(view, selectedItem) {
-        this.stateManager.removeItemFromState(this.collectionName, selectedItem, false);
-    }
-    canSelectItem(view, selectedItem) {
-        return true;
-    }
-    canDeleteItem(view, selectedItem) {
-        return true;
-    }
-    getListenerName() {
-        return this.getName();
-    }
-    filterResults(managerName, name, filterResults) {
-    }
-    foundResult(managerName, name, foundItem) {
-    }
-    collectionChanged(view) {
-    }
     updateViewForNamedCollection(name, newState) {
-        /*
-        Convert the state into data objects
-         */
-        const dataObjs = DataObjectFactory.getInstance().createDataObjectsFromStateNameAndData(name, newState, true);
-        super.updateViewForNamedCollection(name, dataObjs);
+        this.currentObjects = DataObjectFactory.getInstance().createDataObjectsFromStateNameAndData(name, newState, true);
+        super.updateViewForNamedCollection(name, this.currentObjects);
     }
 }
 //# sourceMappingURL=DataObjectCollectionView.js.map
