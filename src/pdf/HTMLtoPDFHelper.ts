@@ -205,9 +205,7 @@ export class HTMLtoPDFHelper {
                 break;
             }
             case 'P': {
-
                 if (addExtraSpace) {
-
                     const currentFontSize = pdf.getFontSize();
                     const height = HTMLtoPDFHelper.MM_PER_FONT_POINT * currentFontSize * 0.6;
                     pdfInfo.cumulativeContentHeight += height;
