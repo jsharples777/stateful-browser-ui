@@ -13,7 +13,7 @@
     "lint": "eslint --ext js,jsx,tsx,ts --fix src"
   },
   "dependencies": {
-    "browser-state-management": "^0.0.16",
+    "browser-state-management": "^0.0.17",
     "cryptojs": "^2.5.3",
     "debug": "^4.3.2",
     "idb": "^6.1.2",
