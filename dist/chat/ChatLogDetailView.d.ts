@@ -82,4 +82,5 @@ export declare class ChatLogDetailView implements View, ChatEventListener, Colle
     private leaveChat;
     private checkCanComment;
     private clearChatLog;
+    itemNotModified(managerName: string, name: string, item: any): void;
 }

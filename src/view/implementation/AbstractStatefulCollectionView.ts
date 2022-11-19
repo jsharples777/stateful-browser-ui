@@ -168,6 +168,9 @@ export abstract class AbstractStatefulCollectionView extends AbstractCollectionV
     foundResult(managerName: string, name: string, foundItem: any): void {
     }
 
+    itemNotModified(managerName: string, name: string, item: any) {
+    }
+
     collectionChanged(view: CollectionView): void {
     }
 

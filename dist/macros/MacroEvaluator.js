@@ -247,6 +247,8 @@ export class MacroEvaluator {
         }
         return result;
     }
+    itemNotModified(managerName, name, item) {
+    }
 }
 MacroEvaluator.LATEST = 'LATEST';
 MacroEvaluator.EARLIEST = 'EARLIEST';

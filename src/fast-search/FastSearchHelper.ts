@@ -44,6 +44,9 @@ class FastSearchHelperSMListener implements StateChangeListener {
     foundResult(managerName: string, name: string, foundItem: any): void {
     }
 
+    itemNotModified(managerName: string, name: string, item: any) {
+    }
+
     getListenerName(): string {
         return "";
     }
@@ -132,6 +135,9 @@ export class FastSearchHelper {
     public static addNewFastSearch(config: FastSearchConfig) {
         logger(`Setting up fast search for form field ${config.linkedFormFieldId} or element ${config.linkedElementId}`);
         new FastSearchHelperSMListener(config).setup();
+    }
+
+    itemNotModified(managerName: string, name: string, item: any) {
     }
 
 

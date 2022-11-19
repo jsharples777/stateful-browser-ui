@@ -127,6 +127,8 @@ export class AbstractStatefulCollectionView extends AbstractCollectionView {
     }
     foundResult(managerName, name, foundItem) {
     }
+    itemNotModified(managerName, name, item) {
+    }
     collectionChanged(view) {
     }
     setFieldValue(objectId, fieldId, value) {

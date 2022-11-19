@@ -31,7 +31,8 @@ export class CollectionUIConfigController {
                 findAll: true,
                 create: true,
                 update: true,
-                destroy: true
+                destroy: true,
+                lastModified:false
             }
         );
         this.stateManager = applicationSM;

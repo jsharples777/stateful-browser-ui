@@ -8,6 +8,8 @@ export class ViewLinkerStateChangedListener {
     }
     foundResult(managerName, name, foundItem) {
     }
+    itemNotModified(managerName, name, item) {
+    }
     getListenerName() {
         return "View Linker Listener";
     }

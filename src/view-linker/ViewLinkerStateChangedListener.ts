@@ -17,6 +17,9 @@ export class ViewLinkerStateChangedListener implements StateChangeListener {
     foundResult(managerName: string, name: string, foundItem: any): void {
     }
 
+    itemNotModified(managerName: string, name: string, item: any) {
+    }
+
     getListenerName(): string {
         return "View Linker Listener";
     }
