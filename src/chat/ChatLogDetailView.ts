@@ -502,6 +502,9 @@ export class ChatLogDetailView implements View, ChatEventListener, CollectionVie
         browserUtil.removeAllChildren(this.chatLogDiv);
     }
 
+    itemNotModified(managerName: string, name: string, item: any) {
+    }
+
 }
 
 

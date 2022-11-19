@@ -32,6 +32,7 @@ export declare abstract class AbstractStatefulCollectionView extends AbstractCol
     getListenerName(): string;
     filterResults(managerName: string, name: string, filterResults: any): void;
     foundResult(managerName: string, name: string, foundItem: any): void;
+    itemNotModified(managerName: string, name: string, item: any): void;
     collectionChanged(view: CollectionView): void;
     setFieldValue(objectId: string, fieldId: string, value: any): void;
 }

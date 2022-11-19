@@ -10,6 +10,8 @@ class FastSearchHelperSMListener {
     }
     foundResult(managerName, name, foundItem) {
     }
+    itemNotModified(managerName, name, item) {
+    }
     getListenerName() {
         return "";
     }
@@ -84,6 +86,8 @@ export class FastSearchHelper {
     static addNewFastSearch(config) {
         logger(`Setting up fast search for form field ${config.linkedFormFieldId} or element ${config.linkedElementId}`);
         new FastSearchHelperSMListener(config).setup();
+    }
+    itemNotModified(managerName, name, item) {
     }
 }
 //# sourceMappingURL=FastSearchHelper.js.map

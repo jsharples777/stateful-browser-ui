@@ -19,4 +19,5 @@ export declare type FastSearchConfig = {
 export declare class FastSearchHelper {
     static addNewDataSourceToSelectElement(element: HTMLSelectElement, source: SimpleValueDataSource): void;
     static addNewFastSearch(config: FastSearchConfig): void;
+    itemNotModified(managerName: string, name: string, item: any): void;
 }

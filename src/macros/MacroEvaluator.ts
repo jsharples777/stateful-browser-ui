@@ -304,4 +304,7 @@ export class MacroEvaluator implements StateChangeListener {
         }
         return result;
     }
+
+    itemNotModified(managerName: string, name: string, item: any) {
+    }
 }

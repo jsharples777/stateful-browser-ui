@@ -392,6 +392,8 @@ export class ChatLogDetailView {
     clearChatLog() {
         browserUtil.removeAllChildren(this.chatLogDiv);
     }
+    itemNotModified(managerName, name, item) {
+    }
 }
 ChatLogDetailView.newFormId = "newMessage";
 ChatLogDetailView.commentId = "message";

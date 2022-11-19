@@ -5,6 +5,7 @@ export declare class ViewLinkerStateChangedListener implements StateChangeListen
     constructor(stateManager: StateManager, stateName: string, itemView: ItemView);
     filterResults(managerName: string, name: string, filterResults: any): void;
     foundResult(managerName: string, name: string, foundItem: any): void;
+    itemNotModified(managerName: string, name: string, item: any): void;
     getListenerName(): string;
     stateChanged(managerName: string, name: string, newValue: any): void;
     stateChangedItemAdded(managerName: string, name: string, itemAdded: any): void;

@@ -43,4 +43,5 @@ export declare class MacroEvaluator implements StateChangeListener {
     protected fieldIsKeyword(field: string): boolean;
     protected evaluateKeyword(currentValue: any, keyword: string): any;
     private processValueForMacros;
+    itemNotModified(managerName: string, name: string, item: any): void;
 }
