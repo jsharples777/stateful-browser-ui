@@ -1,5 +1,5 @@
 export { UIFieldType, defaultGetValue, DRAGGABLE_TYPE, DRAGGABLE_KEY_ID, DRAGGABLE_FROM, ItemEventType, ElementLocation, } from './CommonTypes';
-export { Modifier, SidebarLocation, RowPosition, ActionType, SCREEN_WIDTH_LARGE, SCREEN_WIDTH_SMALL, SCREEN_WIDTH_MEDIUM, CollectionViewSorterDirection, EXTRA_ACTION_ATTRIBUTE_NAME } from './ConfigurationTypes';
+export { Modifier, SidebarLocation, RowPosition, ActionType, SCREEN_WIDTH_LARGE, SCREEN_WIDTH_SMALL, SCREEN_WIDTH_MEDIUM, CollectionSortDirection, EXTRA_ACTION_ATTRIBUTE_NAME } from './ConfigurationTypes';
 /* ui */
 export { jsxCreateFragment, jsxCreateElement } from './jsx/JSXParser';
 export { AlertType } from './alert/AlertListener';
@@ -70,4 +70,5 @@ export { AbstractModalWindow } from './view/implementation/AbstractModalWindow';
 export { ViewLinkerStateChangedListener } from './view-linker/ViewLinkerStateChangedListener';
 export { ViewLinkerItemViewListenerHelper } from './view-linker/ViewLinkerItemViewListenerHelper';
 export { ViewLinkerHelper } from './view-linker/ViewLinkerHelper';
+export { CollectionSorter } from './util/CollectionSorter';
 //# sourceMappingURL=index.js.map

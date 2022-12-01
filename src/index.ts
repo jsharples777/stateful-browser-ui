@@ -42,8 +42,8 @@ export {
     DetailViewRuntimeConfig,
     TableViewRuntimeConfig,
     ListViewRuntimeConfig,
-    CollectionViewSorter,
-    CollectionViewSorterDirection,
+    CollectionSortConfig,
+    CollectionSortDirection,
     ItemEvent,
     EXTRA_ACTION_ATTRIBUTE_NAME
 } from './ConfigurationTypes'
@@ -186,4 +186,6 @@ export {AbstractModalWindow,ModalWindowConfig} from './view/implementation/Abstr
 export {ViewLinkerStateChangedListener} from './view-linker/ViewLinkerStateChangedListener';
 export {ViewLinkerItemViewListenerHelper} from './view-linker/ViewLinkerItemViewListenerHelper';
 export {ViewLinkerHelper,LinkHelperConfig,ViewLinkerResult} from './view-linker/ViewLinkerHelper';
+
+export {CollectionSorter} from './util/CollectionSorter';
 

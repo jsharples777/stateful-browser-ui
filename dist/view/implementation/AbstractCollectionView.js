@@ -2,8 +2,9 @@ import { AbstractView } from "./AbstractView";
 import debug from "debug";
 import { CollectionViewListenerForwarder } from "../delegate/CollectionViewListenerForwarder";
 import { CollectionViewEventHandlerDelegate } from "../delegate/CollectionViewEventHandlerDelegate";
-import { CollectionViewSorterDirection, Modifier } from "../../ConfigurationTypes";
+import { Modifier } from "../../ConfigurationTypes";
 import { CollectionFilterProcessor, isSame } from "browser-state-management";
+import { CollectionSorter } from "../../util/CollectionSorter";
 const avLogger = debug('collection-view-ts');
 const avLoggerDetails = debug('collection-view-ts-detail');
 const avLoggerFilter = debug('collection-view-ts-filter');
@@ -26,7 +27,6 @@ export class AbstractCollectionView extends AbstractView {
         this.eventActionClicked = this.eventActionClicked.bind(this);
         this.eventClickItem = this.eventClickItem.bind(this);
         this.eventDeleteClickItem = this.eventDeleteClickItem.bind(this);
-        this.useSorter = this.useSorter.bind(this);
     }
     render() {
         avLogger('ACV render');
@@ -102,7 +102,7 @@ export class AbstractCollectionView extends AbstractView {
                 let filteredState = CollectionFilterProcessor.getFilteredState(name, newState, this.filter, this.onlyDisplayWithFilter);
                 // do we have a sorter?
                 if (this.sorterConfig && (filteredState.length > 0)) {
-                    filteredState = filteredState.sort(this.useSorter);
+                    filteredState = CollectionSorter.sort(filteredState, this.sorterConfig);
                 }
                 else {
                     // pre sort the collection for display
@@ -205,62 +205,6 @@ export class AbstractCollectionView extends AbstractView {
         let result = [];
         if (foundIndex >= 0) {
             result = this.buffers[foundIndex].values;
-        }
-        return result;
-    }
-    useFieldSorter(item1, item2, fieldId, direction) {
-        let result = 0;
-        const field1Value = item1[fieldId];
-        const field2Value = item2[fieldId];
-        if (field1Value && field2Value) {
-            if (field1Value !== field2Value) {
-                if (direction === CollectionViewSorterDirection.ascending) {
-                    if (field1Value > field2Value) {
-                        result = 1;
-                    }
-                    else {
-                        result = -1;
-                    }
-                }
-                if (direction === CollectionViewSorterDirection.descending) {
-                    if (field1Value > field2Value) {
-                        result = -1;
-                    }
-                    else {
-                        result = 1;
-                    }
-                }
-            }
-        }
-        else if (field1Value) {
-            if (direction === CollectionViewSorterDirection.ascending) {
-                result = 1;
-            }
-            if (direction === CollectionViewSorterDirection.descending) {
-                result = -1;
-            }
-        }
-        else if (field2Value) {
-            if (direction === CollectionViewSorterDirection.ascending) {
-                result = 1;
-            }
-            if (direction === CollectionViewSorterDirection.descending) {
-                result = -1;
-            }
-        }
-        return result;
-    }
-    useSorter(item1, item2) {
-        let result = 0;
-        if (this.sorterConfig) {
-            result = this.useFieldSorter(item1, item2, this.sorterConfig.majorFieldId, this.sorterConfig.majorDirection);
-            if (result === 0) {
-                if (this.sorterConfig.minorFieldId) {
-                    if (this.sorterConfig.minorDirection) {
-                        result = this.useFieldSorter(item1, item2, this.sorterConfig.minorFieldId, this.sorterConfig.minorDirection);
-                    }
-                }
-            }
         }
         return result;
     }

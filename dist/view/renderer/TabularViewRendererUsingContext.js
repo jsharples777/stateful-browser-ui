@@ -1,6 +1,6 @@
 import debug from "debug";
 import { ContextualInformationHelper } from "../../context/ContextualInformationHelper";
-import { CollectionViewSorterDirection, EXTRA_ACTION_ATTRIBUTE_NAME, Modifier } from "../../ConfigurationTypes";
+import { CollectionSortDirection, EXTRA_ACTION_ATTRIBUTE_NAME, Modifier } from "../../ConfigurationTypes";
 import { BasicFieldOperations, browserUtil, DATA_ID_ATTRIBUTE, FieldType } from "browser-state-management";
 const logger = debug('tabular-view-renderer-with-context');
 const paginationLogger = debug('tabular-view-renderer-with-context:pagination');
@@ -425,14 +425,14 @@ export class TabularViewRendererUsingContext {
                             const fieldId = thEl.getAttribute(DATA_ID_ATTRIBUTE);
                             if (currentSortDirectionString && fieldId) {
                                 const currentSortDirection = parseInt(currentSortDirectionString);
-                                let newSortDirection = CollectionViewSorterDirection.descending;
+                                let newSortDirection = CollectionSortDirection.descending;
                                 switch (currentSortDirection) {
-                                    case CollectionViewSorterDirection.ascending: {
-                                        newSortDirection = CollectionViewSorterDirection.descending;
+                                    case CollectionSortDirection.ascending: {
+                                        newSortDirection = CollectionSortDirection.descending;
                                         break;
                                     }
-                                    case CollectionViewSorterDirection.descending: {
-                                        newSortDirection = CollectionViewSorterDirection.ascending;
+                                    case CollectionSortDirection.descending: {
+                                        newSortDirection = CollectionSortDirection.ascending;
                                         break;
                                     }
                                 }
