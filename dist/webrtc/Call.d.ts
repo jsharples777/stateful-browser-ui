@@ -10,7 +10,7 @@ export declare class Call {
     preForCall(divId: string): void;
     startCall(): void;
     endCall(): void;
-    callUser(userId: string): void;
+    callUser(userId: string, displayName: string): void;
     removeUser(userId: string): void;
     prepareToAnswerCallFrom(userId: string): void;
     private startPeerConnection;

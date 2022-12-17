@@ -34,7 +34,7 @@ export class Call {
                 }).then((stream) => {
                     callLogger('stream started - adding video element');
                     this.myVideoStream = stream;
-                    this.addVideoStream(this.id, this.myVideoStream, true);
+                    this.addVideoStream(this.id, this.myVideoStream, this.displayName,true);
                 });
             }
 
@@ -66,7 +66,7 @@ export class Call {
         }
     }
 
-    public callUser(userId: string) {
+    public callUser(userId: string,displayName:string) {
         callLogger(`Asked to call user ${userId}`);
         if (userId === this.id) return; // don't call ourself
         let numberOfAttempts: number = 0;
@@ -81,7 +81,7 @@ export class Call {
                 if (call) {
                     call.on('stream', (userVideoStream: any) => {
                         callLogger(`User ${userId} answered, showing stream`);
-                        this.addVideoStream(userId, userVideoStream, false);
+                        this.addVideoStream(userId, userVideoStream, displayName,false);
                     });
                     clearInterval(interval);
                 } else {
@@ -122,7 +122,7 @@ export class Call {
                     video: true,
                 }).then((stream) => {
                     this.myVideoStream = stream;
-                    this.addVideoStream(this.id, this.myVideoStream, true);
+                    this.addVideoStream(this.id, this.myVideoStream, this.displayName,true);
                     callLogger(`Awaiting call from ${userId}`);
                     this.peer.on('call', (call: any) => {
                         callLogger(`Answering call from ${userId}`);
@@ -130,7 +130,7 @@ export class Call {
                         call.on('stream', (userVideoStream: any) => {
                             alert("Answered");
                             callLogger(`Have answered, showing stream`);
-                            this.addVideoStream(userId, userVideoStream, false);
+                            this.addVideoStream(userId, userVideoStream, userId,false);
                         });
                     });
                 });
@@ -151,14 +151,14 @@ export class Call {
         });
     }
 
-    private constructCallElement(username: string, stream: MediaStream, isCurrentUser: boolean = false): HTMLDivElement {
+    private constructCallElement(username: string, stream: MediaStream, displayName:string, isCurrentUser: boolean = false): HTMLDivElement {
         const videoCardHolder = document.createElement('div');
         videoCardHolder.setAttribute("id", username);
         const videoCard = document.createElement('div');
         browserUtil.addRemoveClasses(videoCard, 'card');
         const videoCardTitle = document.createElement('div');
         browserUtil.addRemoveClasses(videoCardTitle, 'card-header');
-        videoCardTitle.innerHTML = `<h5 class="card-title">${username}</h5>`;
+        videoCardTitle.innerHTML = `<h5 class="card-title">${displayName}</h5>`;
         const videoCardBody = document.createElement('div');
         browserUtil.addRemoveClasses(videoCardBody, 'card-body p-0 text-center');
         const video = document.createElement('video');
@@ -168,7 +168,6 @@ export class Call {
         videoCardBody.appendChild(video);
 
         if (isCurrentUser) {
-            videoCardTitle.innerHTML = `<h5 class="card-title">${this.displayName}</h5>`;
             browserUtil.addClasses(video, 'my-telehealth-video');
 
             const videoCardFooter = document.createElement('div');
@@ -249,13 +248,13 @@ export class Call {
 
     }
 
-    private addVideoStream(username: string, stream: MediaStream, isCurrentUser = false) {
+    private addVideoStream(username: string, stream: MediaStream, displayName:string,isCurrentUser = false) {
         // check to see if they are already there
         let index = this.currentUserList.findIndex((user) => user === username);
         if (index >= 0) return;
 
         this.currentUserList.push(username);
-        const videoElement = this.constructCallElement(username, stream, isCurrentUser);
+        const videoElement = this.constructCallElement(username, stream, displayName, isCurrentUser);
         if (this.webrtcDiv) this.webrtcDiv.append(videoElement);
 
     };
