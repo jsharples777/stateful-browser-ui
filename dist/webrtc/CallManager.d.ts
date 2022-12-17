@@ -3,5 +3,5 @@ export declare class CallManager {
     private static _instance;
     static getInstance(): CallManager;
     private constructor();
-    createCall(username: string, containerId: string): Call;
+    createCall(username: string, containerId: string, displayName: string): Call;
 }

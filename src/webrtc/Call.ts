@@ -10,9 +10,11 @@ export class Call {
     private myVideoStream: MediaStream | null = null;
     private myVideo: HTMLVideoElement | null = null;
     private currentUserList: string[];
+    private displayName: string;
 
-    constructor(id: string) {
+    constructor(id: string,displayName:string) {
         this.id = id;
+        this.displayName = displayName;
         this.callUser = this.callUser.bind(this);
         this.currentUserList = [];
     }
@@ -166,6 +168,7 @@ export class Call {
         videoCardBody.appendChild(video);
 
         if (isCurrentUser) {
+            videoCardTitle.innerHTML = `<h5 class="card-title">${this.displayName}</h5>`;
             browserUtil.addClasses(video, 'my-telehealth-video');
 
             const videoCardFooter = document.createElement('div');
@@ -174,11 +177,11 @@ export class Call {
             browserUtil.addRemoveClasses(footerContent, 'd-flex w-100 justify-content-between mt-2');
             const stopVideoButton = document.createElement('button');
             stopVideoButton.setAttribute('type', 'button');
-            browserUtil.addRemoveClasses(stopVideoButton, 'btn btn-circle btn-warning');
-            stopVideoButton.innerHTML = '<i class="fas fa-video-slash"></i>';
+            browserUtil.addRemoveClasses(stopVideoButton, 'btn btn-circle btn-success');
+            stopVideoButton.innerHTML = '<i class="fas fa-video"></i>';
             const muteMicButton = document.createElement('button');
             muteMicButton.setAttribute('type', 'button');
-            browserUtil.addRemoveClasses(muteMicButton, 'btn btn-circle btn-warning');
+            browserUtil.addRemoveClasses(muteMicButton, 'btn btn-circle btn-success');
             muteMicButton.innerHTML = '<i class="fa fa-microphone"></i>';
             const endCallButton = document.createElement('button');
             endCallButton.setAttribute('type', 'button');
@@ -197,13 +200,15 @@ export class Call {
                 const isPaused = video.paused;
                 if (isPaused) {
                     video.play();
-                    browserUtil.addRemoveClasses(stopVideoButton, 'btn-success', false);
-                    browserUtil.addRemoveClasses(stopVideoButton, 'btn-warning', true);
+                    stopVideoButton.innerHTML = '<i class="fas fa-video"></i>';
+                    browserUtil.addClasses(stopVideoButton, 'btn-success');
+                    browserUtil.removeClasses(stopVideoButton, 'btn-warning');
 
                 } else {
                     video.pause();
-                    browserUtil.addRemoveClasses(stopVideoButton, 'btn-success', true);
-                    browserUtil.addRemoveClasses(stopVideoButton, 'btn-warning', false);
+                    stopVideoButton.innerHTML = '<i class="fas fa-video-slash"></i>';
+                    browserUtil.addClasses(stopVideoButton, 'btn-warning');
+                    browserUtil.removeClasses(stopVideoButton, 'btn-success');
                 }
 
             });
@@ -211,13 +216,15 @@ export class Call {
                 const isMuted = video.muted;
                 if (isMuted) {
                     video.muted = false;
-                    browserUtil.addRemoveClasses(muteMicButton, 'btn-success', false);
-                    browserUtil.addRemoveClasses(muteMicButton, 'btn-warning', true);
+                    muteMicButton.innerHTML = '<i class="fa fa-microphone"></i>';
+                    browserUtil.addClasses(muteMicButton, 'btn-success');
+                    browserUtil.removeClasses(muteMicButton, 'btn-warning');
 
                 } else {
                     video.muted = true;
-                    browserUtil.addRemoveClasses(muteMicButton, 'btn-success', true);
-                    browserUtil.addRemoveClasses(muteMicButton, 'btn-warning', false);
+                    muteMicButton.innerHTML = '<i class="fa fa-microphone-slash"></i>';
+                    browserUtil.addClasses(muteMicButton, 'btn-warning');
+                    browserUtil.removeClasses(muteMicButton, 'btn-success');
                 }
 
             });

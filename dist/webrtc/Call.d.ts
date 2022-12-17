@@ -5,7 +5,8 @@ export declare class Call {
     private myVideoStream;
     private myVideo;
     private currentUserList;
-    constructor(id: string);
+    private displayName;
+    constructor(id: string, displayName: string);
     preForCall(divId: string): void;
     startCall(): void;
     endCall(): void;

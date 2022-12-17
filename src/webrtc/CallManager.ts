@@ -19,8 +19,8 @@ export class CallManager {
     private constructor() {
     }
 
-    public createCall(username:string,containerId:string):Call {
-        const call = new Call(username);
+    public createCall(username:string,containerId:string,displayName:string):Call {
+        const call = new Call(username,displayName);
         call.preForCall(containerId);
         return call;
     }

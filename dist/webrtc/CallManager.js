@@ -10,8 +10,8 @@ export class CallManager {
         }
         return CallManager._instance;
     }
-    createCall(username, containerId) {
-        const call = new Call(username);
+    createCall(username, containerId, displayName) {
+        const call = new Call(username, displayName);
         call.preForCall(containerId);
         return call;
     }
