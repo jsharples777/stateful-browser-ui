@@ -152,7 +152,6 @@ export class Call {
     private constructCallElement(username: string, stream: MediaStream, isCurrentUser: boolean = false): HTMLDivElement {
         const videoCardHolder = document.createElement('div');
         videoCardHolder.setAttribute("id", username);
-        browserUtil.addRemoveClasses(videoCardHolder, 'col-sm-12 col-md-4 col-lg-3');
         const videoCard = document.createElement('div');
         browserUtil.addRemoveClasses(videoCard, 'card');
         const videoCardTitle = document.createElement('div');
@@ -161,13 +160,14 @@ export class Call {
         const videoCardBody = document.createElement('div');
         browserUtil.addRemoveClasses(videoCardBody, 'card-body p-0 text-center');
         const video = document.createElement('video');
-        browserUtil.addRemoveClasses(video, 'video ');
 
         videoCard.appendChild(videoCardTitle);
         videoCard.appendChild(videoCardBody);
         videoCardBody.appendChild(video);
 
         if (isCurrentUser) {
+            browserUtil.addClasses(video, 'my-telehealth-video');
+
             const videoCardFooter = document.createElement('div');
             browserUtil.addRemoveClasses(videoCardFooter, 'card-footer');
             const footerContent = document.createElement('div');
@@ -227,6 +227,9 @@ export class Call {
             });
 
             this.myVideo = video;
+        }
+        else {
+            browserUtil.addClasses(video, 'telehealth-video');
         }
 
         videoCardHolder.appendChild(videoCard);
