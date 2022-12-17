@@ -7,7 +7,7 @@ export declare class Call {
     private currentUserList;
     private displayName;
     constructor(id: string, displayName: string);
-    preForCall(divId: string): void;
+    preForCall(divId: string, port: number): void;
     startCall(): void;
     endCall(): void;
     callUser(userId: string, displayName: string): void;

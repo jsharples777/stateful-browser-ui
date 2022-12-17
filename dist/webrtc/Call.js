@@ -12,9 +12,9 @@ export class Call {
         this.callUser = this.callUser.bind(this);
         this.currentUserList = [];
     }
-    preForCall(divId) {
+    preForCall(divId, port) {
         this.webrtcDiv = document.getElementById(divId);
-        this.startPeerConnection();
+        this.startPeerConnection(port);
     }
     startCall() {
         try {
@@ -135,9 +135,9 @@ export class Call {
             callLogger(`Insecure context or no video capability`);
         }
     }
-    startPeerConnection() {
+    startPeerConnection(port) {
         // @ts-ignore  - is for the WebRTC peer via Nodejs
-        this.peer = new Peer(this.id, { path: '/peerjs', host: '/', debug: 2, secure: true });
+        this.peer = new Peer(this.id, { path: '/peerjs', host: '/', debug: 3, secure: true, port: port });
         this.peer.on('open', (id) => {
             callLogger('My peer ID is: ' + id);
         });

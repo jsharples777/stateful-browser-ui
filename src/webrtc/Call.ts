@@ -19,9 +19,9 @@ export class Call {
         this.currentUserList = [];
     }
 
-    public preForCall(divId: string) {
+    public preForCall(divId: string,port:number) {
         this.webrtcDiv = document.getElementById(divId);
-        this.startPeerConnection();
+        this.startPeerConnection(port);
     }
 
     public startCall() {
@@ -143,9 +143,9 @@ export class Call {
 
     }
 
-    private startPeerConnection() {
+    private startPeerConnection(port:number) {
         // @ts-ignore  - is for the WebRTC peer via Nodejs
-        this.peer = new Peer(this.id, {path: '/peerjs', host: '/', debug: 2, secure: true});
+        this.peer = new Peer(this.id, {path: '/peerjs', host: '/', debug: 3, secure: true,port:port});
         this.peer.on('open', (id: any) => {
             callLogger('My peer ID is: ' + id);
         });
