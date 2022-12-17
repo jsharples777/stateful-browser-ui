@@ -93,3 +93,5 @@ export { AbstractModalWindow, ModalWindowConfig } from './view/implementation/Ab
 export { ViewLinkerStateChangedListener } from './view-linker/ViewLinkerStateChangedListener';
 export { ViewLinkerItemViewListenerHelper } from './view-linker/ViewLinkerItemViewListenerHelper';
 export { ViewLinkerHelper, LinkHelperConfig, ViewLinkerResult } from './view-linker/ViewLinkerHelper';
+export { CallManager } from './webrtc/CallManager';
+export { Call } from './webrtc/Call';
