@@ -143,13 +143,13 @@ export declare type TabularViewDOMConfig = {
     tabBarElement: BasicElement;
     tabViewContainer: BasicElement;
 };
-export declare enum CollectionViewSorterDirection {
+export declare enum CollectionSortDirection {
     ascending = -1,
     descending = 1
 }
-export declare type CollectionViewSorter = {
+export declare type CollectionSortConfig = {
     majorFieldId: string;
-    majorDirection: CollectionViewSorterDirection;
+    majorDirection: CollectionSortDirection;
     minorFieldId?: string;
-    minorDirection?: CollectionViewSorterDirection;
+    minorDirection?: CollectionSortDirection;
 };

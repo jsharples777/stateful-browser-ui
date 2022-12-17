@@ -1,5 +1,5 @@
 import { View } from "./View";
-import { CollectionViewDOMConfig, CollectionViewSorter, Modifier } from "../../ConfigurationTypes";
+import { CollectionViewDOMConfig, CollectionSortConfig, Modifier } from "../../ConfigurationTypes";
 import { CollectionFilter } from "browser-state-management";
 export interface CollectionView extends View {
     getIdForItemInNamedCollection(name: string, item: any): string;
@@ -27,7 +27,7 @@ export interface CollectionView extends View {
     clearFilter(): void;
     setOnlyDisplayWithFilter(onlyDisplayWithFilter: boolean): void;
     getCurrentFilter(): CollectionFilter | null;
-    applySorter(sorter: CollectionViewSorter): void;
+    applySorter(sorter: CollectionSortConfig): void;
     hasSorter(): boolean;
     clearSorter(): void;
     getDisplayedCollection(): any[];

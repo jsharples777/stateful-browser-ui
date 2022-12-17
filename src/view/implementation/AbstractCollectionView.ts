@@ -10,11 +10,12 @@ import {CollectionViewEventHandlerDelegate} from "../delegate/CollectionViewEven
 import {CollectionViewEventDelegate} from "../interface/CollectionViewEventDelegate";
 import {
     CollectionViewDOMConfig,
-    CollectionViewSorter,
-    CollectionViewSorterDirection,
+    CollectionSortConfig,
+    CollectionSortDirection,
     Modifier
 } from "../../ConfigurationTypes";
 import {CollectionFilter, CollectionFilterProcessor, isSame} from "browser-state-management";
+import {CollectionSorter} from "../../util/CollectionSorter";
 
 const avLogger = debug('collection-view-ts');
 const avLoggerDetails = debug('collection-view-ts-detail');
@@ -33,7 +34,7 @@ export abstract class AbstractCollectionView extends AbstractView implements Col
     protected collectionUIConfig: CollectionViewDOMConfig;
     protected eventHandlerDelegate: CollectionViewEventDelegate;
     protected filter: CollectionFilter | null = null;
-    protected sorterConfig: CollectionViewSorter | null = null;
+    protected sorterConfig: CollectionSortConfig | null = null;
     protected onlyDisplayWithFilter: boolean = false;
     protected buffers: CollectionBuffer[] = [];
 
@@ -54,7 +55,6 @@ export abstract class AbstractCollectionView extends AbstractView implements Col
         this.eventClickItem = this.eventClickItem.bind(this);
         this.eventDeleteClickItem = this.eventDeleteClickItem.bind(this);
 
-        this.useSorter = this.useSorter.bind(this);
     }
 
     abstract getIdForItemInNamedCollection(name: string, item: any): string;
@@ -166,7 +166,7 @@ export abstract class AbstractCollectionView extends AbstractView implements Col
 
                 // do we have a sorter?
                 if (this.sorterConfig && (filteredState.length > 0)) {
-                    filteredState = filteredState.sort(this.useSorter);
+                    filteredState = CollectionSorter.sort(filteredState,this.sorterConfig);
                 } else {
                     // pre sort the collection for display
                     filteredState = filteredState.sort(this.applyDefaultSort);
@@ -227,7 +227,7 @@ export abstract class AbstractCollectionView extends AbstractView implements Col
         this.render();
     }
 
-    applySorter(sorter: CollectionViewSorter): void {
+    applySorter(sorter: CollectionSortConfig): void {
         this.sorterConfig = sorter;
         this.render();
     }
@@ -290,66 +290,6 @@ export abstract class AbstractCollectionView extends AbstractView implements Col
         return result;
     }
 
-    protected useFieldSorter(item1: any, item2: any, fieldId: string, direction: CollectionViewSorterDirection): number {
-        let result = 0;
-        const field1Value = item1[fieldId];
-        const field2Value = item2[fieldId];
-
-        if (field1Value && field2Value) {
-            if (field1Value !== field2Value) {
-                if (direction === CollectionViewSorterDirection.ascending) {
-                    if (field1Value > field2Value) {
-                        result = 1;
-                    }
-                    else {
-                        result = -1;
-                    }
-                }
-                if (direction === CollectionViewSorterDirection.descending) {
-                    if (field1Value > field2Value) {
-                        result = -1;
-                    }
-                    else {
-                        result = 1;
-                    }
-                }
-            }
-        }
-        else if (field1Value) {
-            if (direction === CollectionViewSorterDirection.ascending) {
-                result = 1;
-            }
-            if (direction === CollectionViewSorterDirection.descending) {
-                result = -1;
-            }
-        }
-        else if (field2Value) {
-            if (direction === CollectionViewSorterDirection.ascending) {
-                result = 1;
-            }
-            if (direction === CollectionViewSorterDirection.descending) {
-                result = -1;
-            }
-        }
-
-
-        return result;
-    }
-
-    protected useSorter(item1: any, item2: any): number {
-        let result = 0;
-        if (this.sorterConfig) {
-            result = this.useFieldSorter(item1, item2, this.sorterConfig.majorFieldId, this.sorterConfig.majorDirection);
-            if (result === 0) {
-                if (this.sorterConfig.minorFieldId) {
-                    if (this.sorterConfig.minorDirection) {
-                        result = this.useFieldSorter(item1, item2, this.sorterConfig.minorFieldId, this.sorterConfig.minorDirection);
-                    }
-                }
-            }
-        }
-        return result;
-    }
 
     protected getFilteredState(currentState: any): any[] {
         let filteredState: any[] = [];

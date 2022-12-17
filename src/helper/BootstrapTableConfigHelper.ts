@@ -10,7 +10,7 @@ import {
     FIELD_CreatedOn,
     FIELD_ModifiedOn, FieldType
 } from "browser-state-management";
-import {CollectionViewSorterDirection, TableViewRuntimeConfig} from "../ConfigurationTypes";
+import {CollectionSortDirection, TableViewRuntimeConfig} from "../ConfigurationTypes";
 import {defaultGetValue, FieldLabelPosition, FieldRuntimeConfig, FieldUIConfig, UIFieldType} from "../CommonTypes";
 
 
@@ -85,7 +85,7 @@ export class BootstrapTableConfigHelper {
                             innerHTML: fieldDef.displayName
                         },
                         displayOrder: displayOrderValue,
-                        sortDirection: CollectionViewSorterDirection.ascending
+                        sortDirection: CollectionSortDirection.ascending
                     }
 
 
@@ -145,7 +145,7 @@ export class BootstrapTableConfigHelper {
                     innerHTML: 'Actions'
                 },
                 displayOrder: 1000,
-                sortDirection:CollectionViewSorterDirection.ascending
+                sortDirection:CollectionSortDirection.ascending
             }
 
         }

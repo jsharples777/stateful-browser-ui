@@ -42,8 +42,8 @@ export {
     DetailViewRuntimeConfig,
     TableViewRuntimeConfig,
     ListViewRuntimeConfig,
-    CollectionViewSorter,
-    CollectionViewSorterDirection,
+    CollectionSortConfig,
+    CollectionSortDirection,
     ItemEvent,
     EXTRA_ACTION_ATTRIBUTE_NAME
 } from './ConfigurationTypes'
@@ -187,7 +187,5 @@ export {ViewLinkerStateChangedListener} from './view-linker/ViewLinkerStateChang
 export {ViewLinkerItemViewListenerHelper} from './view-linker/ViewLinkerItemViewListenerHelper';
 export {ViewLinkerHelper,LinkHelperConfig,ViewLinkerResult} from './view-linker/ViewLinkerHelper';
 
-export {CallManager} from './webrtc/CallManager';
-export {Call} from './webrtc/Call';
-
+export {CollectionSorter} from './util/CollectionSorter';
 

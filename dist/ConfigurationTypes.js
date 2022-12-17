@@ -37,9 +37,9 @@ export var RowPosition;
 export const SCREEN_WIDTH_LARGE = 992;
 export const SCREEN_WIDTH_MEDIUM = 769;
 export const SCREEN_WIDTH_SMALL = 415;
-export var CollectionViewSorterDirection;
-(function (CollectionViewSorterDirection) {
-    CollectionViewSorterDirection[CollectionViewSorterDirection["ascending"] = -1] = "ascending";
-    CollectionViewSorterDirection[CollectionViewSorterDirection["descending"] = 1] = "descending";
-})(CollectionViewSorterDirection || (CollectionViewSorterDirection = {}));
+export var CollectionSortDirection;
+(function (CollectionSortDirection) {
+    CollectionSortDirection[CollectionSortDirection["ascending"] = -1] = "ascending";
+    CollectionSortDirection[CollectionSortDirection["descending"] = 1] = "descending";
+})(CollectionSortDirection || (CollectionSortDirection = {}));
 //# sourceMappingURL=ConfigurationTypes.js.map

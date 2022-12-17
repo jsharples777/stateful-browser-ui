@@ -1,7 +1,7 @@
 import debug from 'debug';
 import { LimitedChoiceTextRenderer } from "./LimitedChoiceTextRenderer";
 import { BasicFieldOperations, FIELD_CreatedOn, FIELD_ModifiedOn, FieldType } from "browser-state-management";
-import { CollectionViewSorterDirection } from "../ConfigurationTypes";
+import { CollectionSortDirection } from "../ConfigurationTypes";
 import { defaultGetValue, FieldLabelPosition, UIFieldType } from "../CommonTypes";
 const logger = debug('bootstrap-tabular-config-helper');
 export class BootstrapTableConfigHelper {
@@ -64,7 +64,7 @@ export class BootstrapTableConfigHelper {
                             innerHTML: fieldDef.displayName
                         },
                         displayOrder: displayOrderValue,
-                        sortDirection: CollectionViewSorterDirection.ascending
+                        sortDirection: CollectionSortDirection.ascending
                     };
                     // construct the field ui config
                     let fieldUIConfig = {
@@ -121,7 +121,7 @@ export class BootstrapTableConfigHelper {
                     innerHTML: 'Actions'
                 },
                 displayOrder: 1000,
-                sortDirection: CollectionViewSorterDirection.ascending
+                sortDirection: CollectionSortDirection.ascending
             };
         }
         const tableConfig = {

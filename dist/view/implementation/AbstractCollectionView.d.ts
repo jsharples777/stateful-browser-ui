@@ -4,7 +4,7 @@ import { CollectionViewRenderer } from "../interface/CollectionViewRenderer";
 import { CollectionViewEventHandler } from "../interface/CollectionViewEventHandler";
 import { CollectionViewListener } from "../interface/CollectionViewListener";
 import { CollectionViewEventDelegate } from "../interface/CollectionViewEventDelegate";
-import { CollectionViewDOMConfig, CollectionViewSorter, CollectionViewSorterDirection, Modifier } from "../../ConfigurationTypes";
+import { CollectionViewDOMConfig, CollectionSortConfig, Modifier } from "../../ConfigurationTypes";
 import { CollectionFilter } from "browser-state-management";
 export declare type CollectionBuffer = {
     name: string;
@@ -17,7 +17,7 @@ export declare abstract class AbstractCollectionView extends AbstractView implem
     protected collectionUIConfig: CollectionViewDOMConfig;
     protected eventHandlerDelegate: CollectionViewEventDelegate;
     protected filter: CollectionFilter | null;
-    protected sorterConfig: CollectionViewSorter | null;
+    protected sorterConfig: CollectionSortConfig | null;
     protected onlyDisplayWithFilter: boolean;
     protected buffers: CollectionBuffer[];
     protected constructor(uiConfig: CollectionViewDOMConfig, collectionName: string);
@@ -57,7 +57,7 @@ export declare abstract class AbstractCollectionView extends AbstractView implem
     getItemIcons(name: string, item: any): string[];
     prependItemIcons(name: string, item: any): boolean;
     applyFilter(filter: CollectionFilter): void;
-    applySorter(sorter: CollectionViewSorter): void;
+    applySorter(sorter: CollectionSortConfig): void;
     clearFilter(): void;
     clearSorter(): void;
     hasFilter(): boolean;
@@ -66,7 +66,5 @@ export declare abstract class AbstractCollectionView extends AbstractView implem
     setOnlyDisplayWithFilter(onlyDisplayWithFilter: boolean): void;
     protected setBufferForName(name: string, values: any[]): void;
     protected getBufferForName(name: string): any[];
-    protected useFieldSorter(item1: any, item2: any, fieldId: string, direction: CollectionViewSorterDirection): number;
-    protected useSorter(item1: any, item2: any): number;
     protected getFilteredState(currentState: any): any[];
 }

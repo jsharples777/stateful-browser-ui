@@ -180,16 +180,16 @@ export type TabularViewDOMConfig = {
 }
 
 
-export enum CollectionViewSorterDirection {
+export enum CollectionSortDirection {
     ascending = -1,
     descending = 1
 }
 
-export type CollectionViewSorter = {
+export type CollectionSortConfig = {
     majorFieldId: string,
-    majorDirection: CollectionViewSorterDirection,
+    majorDirection: CollectionSortDirection,
     minorFieldId?: string
-    minorDirection?: CollectionViewSorterDirection
+    minorDirection?: CollectionSortDirection
 }
 
 

@@ -1,5 +1,5 @@
 import {FieldDefinition} from "browser-state-management";
-import {CollectionViewSorterDirection} from "../../ConfigurationTypes";
+import {CollectionSortDirection} from "../../ConfigurationTypes";
 import {BasicElement, FieldUIConfig} from "../../CommonTypes";
 
 
@@ -7,7 +7,7 @@ export type TableHeaderConfig = {
     field?: FieldDefinition,
     element: BasicElement,
     displayOrder: number,
-    sortDirection:CollectionViewSorterDirection
+    sortDirection:CollectionSortDirection
 }
 
 export type TableUIConfig = {

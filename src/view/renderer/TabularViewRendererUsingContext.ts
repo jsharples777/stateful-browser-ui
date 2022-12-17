@@ -5,8 +5,9 @@ import {CollectionViewEventHandler} from "../interface/CollectionViewEventHandle
 import {TableUIConfig} from "./TableUITypeDefs";
 import {ContextualInformationHelper} from "../../context/ContextualInformationHelper";
 import {
+    CollectionSortDirection,
     CollectionViewDOMConfig,
-    CollectionViewSorterDirection,
+
     EXTRA_ACTION_ATTRIBUTE_NAME, Modifier
 } from "../../ConfigurationTypes";
 import {BasicFieldOperations, browserUtil, DATA_ID_ATTRIBUTE, FieldType} from "browser-state-management";
@@ -490,15 +491,15 @@ export class TabularViewRendererUsingContext implements CollectionViewRenderer {
                                 const fieldId = thEl.getAttribute(DATA_ID_ATTRIBUTE);
                                 if (currentSortDirectionString && fieldId) {
                                     const currentSortDirection = parseInt(currentSortDirectionString);
-                                    let newSortDirection = CollectionViewSorterDirection.descending;
+                                    let newSortDirection = CollectionSortDirection.descending;
 
                                     switch (currentSortDirection) {
-                                        case CollectionViewSorterDirection.ascending: {
-                                            newSortDirection = CollectionViewSorterDirection.descending;
+                                        case CollectionSortDirection.ascending: {
+                                            newSortDirection = CollectionSortDirection.descending;
                                             break;
                                         }
-                                        case CollectionViewSorterDirection.descending: {
-                                            newSortDirection = CollectionViewSorterDirection.ascending;
+                                        case CollectionSortDirection.descending: {
+                                            newSortDirection = CollectionSortDirection.ascending;
                                             break;
                                         }
                                     }
