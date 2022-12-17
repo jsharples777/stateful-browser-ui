@@ -71,4 +71,6 @@ export { ViewLinkerStateChangedListener } from './view-linker/ViewLinkerStateCha
 export { ViewLinkerItemViewListenerHelper } from './view-linker/ViewLinkerItemViewListenerHelper';
 export { ViewLinkerHelper } from './view-linker/ViewLinkerHelper';
 export { CollectionSorter } from './util/CollectionSorter';
+export { CallManager } from './webrtc/CallManager';
+export { Call } from './webrtc/Call';
 //# sourceMappingURL=index.js.map
