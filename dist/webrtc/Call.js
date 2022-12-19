@@ -255,7 +255,7 @@ export class Call {
         this.currentUserList.push(username);
         const videoElement = this.constructCallElement(username, stream, displayName, isCurrentUser);
         if (this.webrtcDiv)
-            this.webrtcDiv.append(videoElement);
+            this.webrtcDiv.prepend(videoElement);
     }
     ;
 }
