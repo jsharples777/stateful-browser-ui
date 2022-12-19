@@ -1,5 +1,5 @@
 import debug from "debug";
-import { browserUtil } from "browser-state-management";
+import { browserUtil, NotificationManager, NotificationType, UndefinedBoolean } from "browser-state-management";
 const callLogger = debug('call');
 export class Call {
     constructor(id, displayName) {
@@ -69,10 +69,26 @@ export class Call {
         // wait a small time for the sockets and peer to sync
         const interval = setInterval(() => {
             callLogger(`Calling user ${userId}`);
+            NotificationManager.getInstance().show({
+                duration: 5000,
+                id: "-2",
+                message: `Calling ${displayName}...`,
+                removeOnHide: UndefinedBoolean.true,
+                title: "Telehealth",
+                type: NotificationType.info
+            });
             if (this.myVideoStream) {
                 const call = this.peer.call(userId, this.myVideoStream);
                 if (call) {
                     call.on('stream', (userVideoStream) => {
+                        NotificationManager.getInstance().show({
+                            duration: 5000,
+                            id: "-3",
+                            message: `Call ${displayName} answered, joining call.`,
+                            removeOnHide: UndefinedBoolean.true,
+                            title: "Telehealth",
+                            type: NotificationType.info
+                        });
                         callLogger(`User ${userId} answered, showing stream`);
                         this.addVideoStream(userId, userVideoStream, displayName, false);
                     });
@@ -122,7 +138,14 @@ export class Call {
                         callLogger(`Answering call from ${userId}`);
                         call.answer(this.myVideoStream);
                         call.on('stream', (userVideoStream) => {
-                            alert("Answered");
+                            NotificationManager.getInstance().show({
+                                duration: 5000,
+                                id: "-1",
+                                message: `Received call from ${userId} - connecting`,
+                                removeOnHide: UndefinedBoolean.true,
+                                title: "Telehealth",
+                                type: NotificationType.info
+                            });
                             callLogger(`Have answered, showing stream`);
                             this.addVideoStream(userId, userVideoStream, userId, false);
                         });
