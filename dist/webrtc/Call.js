@@ -49,7 +49,7 @@ export class Call {
         this.currentUserList = [];
         if (this.peer) {
             callLogger('Stopping video stream');
-            //this.peer.disconnect();
+            this.peer.disconnect();
             if (this.myVideoStream) {
                 this.myVideoStream.getTracks().forEach((track) => track.stop());
             }
