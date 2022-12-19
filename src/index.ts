@@ -189,3 +189,6 @@ export {ViewLinkerHelper,LinkHelperConfig,ViewLinkerResult} from './view-linker/
 
 export {CollectionSorter} from './util/CollectionSorter';
 
+export {CallManager} from './webrtc/CallManager'
+export {Call} from './webrtc/Call'
+
