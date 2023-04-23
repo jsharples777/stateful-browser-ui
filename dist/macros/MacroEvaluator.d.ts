@@ -32,7 +32,7 @@ export declare class MacroEvaluator implements StateChangeListener {
     addMacro(macro: Macro): void;
     evaluate(macro: any, value: string, foundPosition: number): EvaluationResult;
     addInputField(field: Field): void;
-    addHTMLElement(element: HTMLElement): void;
+    addHTMLElement(name: string, element: HTMLElement): void;
     filterResults(managerName: string, name: string, filterResults: any): void;
     foundResult(managerName: string, name: string, foundItem: any): void;
     getListenerName(): string;
