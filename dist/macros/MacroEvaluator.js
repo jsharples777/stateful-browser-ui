@@ -131,30 +131,33 @@ export class MacroEvaluator {
     addInputField(field) {
         try {
             const element = field.getElement();
-            element.addEventListener('keyup', (event) => {
-                if (event.isComposing || event.keyCode === 229) {
-                    return;
-                }
-                if (event.key) {
-                    if ((event.key === 'Tab') || (event.key === "Enter") || (event.key === 'Space')) {
-                        // @ts-ignore
-                        logger(`Checking for macros for field ${field.getName()} with value ${element.value}`);
-                        // @ts-ignore
-                        element.value = this.processValueForMacros(element.value);
-                        return;
-                    }
-                }
-                if ((event.keyCode === 32) || (event.keyCode === 13) || (event.keyCode === 9)) {
-                    // @ts-ignore
-                    logger(`Checking for macros for field ${field.getName()} with value ${element.value}`);
-                    // @ts-ignore
-                    element.value = this.processValueForMacros(element.value);
-                }
-            });
+            this.addHTMLElement(element);
         }
         catch (err) {
             logger(`Unable to access input element for field ${field.getName()}`);
         }
+    }
+    addHTMLElement(element) {
+        element.addEventListener('keyup', (event) => {
+            if (event.isComposing || event.keyCode === 229) {
+                return;
+            }
+            if (event.key) {
+                if ((event.key === 'Tab') || (event.key === "Enter") || (event.key === 'Space')) {
+                    // @ts-ignore
+                    logger(`Checking for macros for field ${field.getName()} with value ${element.value}`);
+                    // @ts-ignore
+                    element.value = this.processValueForMacros(element.value);
+                    return;
+                }
+            }
+            if ((event.keyCode === 32) || (event.keyCode === 13) || (event.keyCode === 9)) {
+                // @ts-ignore
+                logger(`Checking for macros for field ${field.getName()} with value ${element.value}`);
+                // @ts-ignore
+                element.value = this.processValueForMacros(element.value);
+            }
+        });
     }
     filterResults(managerName, name, filterResults) {
     }
