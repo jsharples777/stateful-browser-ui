@@ -66,6 +66,14 @@ export class AlertManager implements KeyActionEventReceiver {
                     metaKeyRequired: false,
                     shiftKeyRequired: false,
                     altKeyRequired: false,
+                    keyCode: 'NumpadEnter',
+                    actionName: BasicKeyAction.ok
+                },
+                {
+                    controlKeyRequired: false,
+                    metaKeyRequired: false,
+                    shiftKeyRequired: false,
+                    altKeyRequired: false,
                     keyCode: 'Escape',
                     actionName: BasicKeyAction.cancel
                 }
