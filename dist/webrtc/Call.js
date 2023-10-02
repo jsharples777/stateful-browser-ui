@@ -1,5 +1,6 @@
 import debug from "debug";
 import { browserUtil, NotificationManager, NotificationType, UndefinedBoolean } from "browser-state-management";
+import { NotificationLocation } from "browser-state-management/dist/notification/NotificationTypes";
 const callLogger = debug('call');
 export class Call {
     constructor(id, displayName) {
@@ -75,7 +76,8 @@ export class Call {
                 message: `Calling ${displayName}...`,
                 removeOnHide: UndefinedBoolean.true,
                 title: "Telehealth",
-                type: NotificationType.info
+                type: NotificationType.info,
+                location: NotificationLocation.topright
             });
             if (this.myVideoStream) {
                 const call = this.peer.call(userId, this.myVideoStream);
@@ -87,7 +89,8 @@ export class Call {
                             message: `Call ${displayName} answered, joining call.`,
                             removeOnHide: UndefinedBoolean.true,
                             title: "Telehealth",
-                            type: NotificationType.info
+                            type: NotificationType.info,
+                            location: NotificationLocation.topright
                         });
                         callLogger(`User ${userId} answered, showing stream`);
                         this.addVideoStream(userId, userVideoStream, displayName, false);
@@ -144,7 +147,8 @@ export class Call {
                                 message: `Received call from ${userId} - connecting`,
                                 removeOnHide: UndefinedBoolean.true,
                                 title: "Telehealth",
-                                type: NotificationType.info
+                                type: NotificationType.info,
+                                location: NotificationLocation.topright
                             });
                             callLogger(`Have answered, showing stream`);
                             this.addVideoStream(userId, userVideoStream, userId, false);

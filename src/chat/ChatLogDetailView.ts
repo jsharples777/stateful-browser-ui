@@ -23,6 +23,7 @@ import {
 import {browserUtil} from "browser-state-management";
 import {Modifier, ViewDOMConfig} from "../ConfigurationTypes";
 import {DRAGGABLE_KEY_ID, DRAGGABLE_TYPE} from "../CommonTypes";
+import {NotificationLocation} from "browser-state-management/dist/notification/NotificationTypes";
 
 
 const csLoggerDetail = debug('chat-sidebar:detail');
@@ -209,7 +210,9 @@ export class ChatLogDetailView implements View, ChatEventListener, CollectionVie
                         id: this.selectedChatLog.roomName
                     },
                     title: 'Chat',
-                    type: NotificationType.info
+                    type: NotificationType.info,
+                    location: NotificationLocation.topright,
+
 
                 }
                 NotificationManager.getInstance().show(notification);
@@ -300,7 +303,8 @@ export class ChatLogDetailView implements View, ChatEventListener, CollectionVie
                 name: FrameworkNotificationSources.CHAT
             },
             title: 'Chat',
-            type: NotificationType.info
+            type: NotificationType.info,
+            location: NotificationLocation.topright
 
         }
         NotificationManager.getInstance().show(notification);

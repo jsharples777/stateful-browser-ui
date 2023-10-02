@@ -6,6 +6,7 @@ import { FrameworkNotificationSources, NotificationType } from "browser-state-ma
 import { ChatManager, NotificationController, NotificationManager, Priority, SecurityManager } from "browser-state-management";
 import { browserUtil } from "browser-state-management";
 import { DRAGGABLE_KEY_ID, DRAGGABLE_TYPE } from "../CommonTypes";
+import { NotificationLocation } from "browser-state-management/dist/notification/NotificationTypes";
 const csLoggerDetail = debug('chat-sidebar:detail');
 export class ChatLogDetailView {
     constructor(stateManager) {
@@ -131,7 +132,8 @@ export class ChatLogDetailView {
                         id: this.selectedChatLog.roomName
                     },
                     title: 'Chat',
-                    type: NotificationType.info
+                    type: NotificationType.info,
+                    location: NotificationLocation.topright,
                 };
                 NotificationManager.getInstance().show(notification);
             }
@@ -211,7 +213,8 @@ export class ChatLogDetailView {
                 name: FrameworkNotificationSources.CHAT
             },
             title: 'Chat',
-            type: NotificationType.info
+            type: NotificationType.info,
+            location: NotificationLocation.topright
         };
         NotificationManager.getInstance().show(notification);
     }
