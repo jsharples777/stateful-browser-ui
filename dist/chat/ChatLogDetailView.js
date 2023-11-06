@@ -4,9 +4,8 @@ import { DRAGGABLE, STATE_NAMES, VIEW_NAME } from "./ChatTypes";
 import { v4 } from "uuid";
 import { FrameworkNotificationSources, NotificationType } from "browser-state-management";
 import { ChatManager, NotificationController, NotificationManager, Priority, SecurityManager } from "browser-state-management";
-import { browserUtil } from "browser-state-management";
+import { browserUtil, NotificationLocation } from "browser-state-management";
 import { DRAGGABLE_KEY_ID, DRAGGABLE_TYPE } from "../CommonTypes";
-import { NotificationLocation } from "browser-state-management/dist/notification/NotificationTypes";
 const csLoggerDetail = debug('chat-sidebar:detail');
 export class ChatLogDetailView {
     constructor(stateManager) {

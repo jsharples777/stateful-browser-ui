@@ -114,6 +114,7 @@ export class FileUploadManager implements KeyActionEventReceiver {
     public startUpload(config: FileUploadConfig) {
         this.fileUploadTitle.innerHTML = config.title;
         this.config = config;
+        this.fileUploadForm.reset();
         this.show();
     }
 

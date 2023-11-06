@@ -79,6 +79,7 @@ export class FileUploadManager {
     startUpload(config) {
         this.fileUploadTitle.innerHTML = config.title;
         this.config = config;
+        this.fileUploadForm.reset();
         this.show();
     }
     hide() {

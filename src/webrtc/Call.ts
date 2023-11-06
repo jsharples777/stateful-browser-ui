@@ -1,6 +1,6 @@
 import debug from "debug";
-import {browserUtil, NotificationManager, NotificationType, UndefinedBoolean} from "browser-state-management";
-import {NotificationLocation} from "browser-state-management/dist/notification/NotificationTypes";
+import {browserUtil, NotificationManager, NotificationType, UndefinedBoolean, NotificationLocation} from "browser-state-management";
+
 
 const callLogger = debug('call');
 

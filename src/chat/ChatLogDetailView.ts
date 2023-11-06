@@ -20,10 +20,9 @@ import {
     SecurityManager, SimpleAttachment,
     StateChangeListener, StateManager
 } from "browser-state-management";
-import {browserUtil} from "browser-state-management";
+import {browserUtil,NotificationLocation} from "browser-state-management";
 import {Modifier, ViewDOMConfig} from "../ConfigurationTypes";
 import {DRAGGABLE_KEY_ID, DRAGGABLE_TYPE} from "../CommonTypes";
-import {NotificationLocation} from "browser-state-management/dist/notification/NotificationTypes";
 
 
 const csLoggerDetail = debug('chat-sidebar:detail');
