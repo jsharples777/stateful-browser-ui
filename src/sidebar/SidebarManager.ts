@@ -69,7 +69,7 @@ export class SidebarManager {
         return result;
     }
 
-    public toggleSidebar(name: string): boolean {
+    public toggleSidebar(name: string,pushContent:boolean = false): boolean {
 
         let result = false;
         const foundIndex = this.sidebars.findIndex((config) => config.name === name);
@@ -79,7 +79,7 @@ export class SidebarManager {
             if (sidebarState) {
                 this.hideSidebar(name);
             } else {
-                this.showSidebar(name)
+                this.showSidebar(name,pushContent)
             }
 
             result = config.isShowing;

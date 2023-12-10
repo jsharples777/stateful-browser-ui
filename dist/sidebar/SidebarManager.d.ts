@@ -11,5 +11,5 @@ export declare class SidebarManager {
     showSidebar(name: string, pushContentOver?: boolean): void;
     hideSidebar(name: string): void;
     isSidebarVisible(name: string): boolean;
-    toggleSidebar(name: string): boolean;
+    toggleSidebar(name: string, pushContent?: boolean): boolean;
 }
