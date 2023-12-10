@@ -6,6 +6,7 @@ export class SidebarViewContainer {
     constructor(prefs) {
         this.bIsShowing = false;
         this.listeners = [];
+        this.mainDivId = 'root';
         this.prefs = prefs;
         this.views = [];
         // event handlers
@@ -31,6 +32,9 @@ export class SidebarViewContainer {
         this.views.push(view);
         view.addEventListener(this);
     }
+    setMainDivId(mainDivId) {
+        this.mainDivId = mainDivId;
+    }
     onDocumentLoaded() {
         // hide the side bar panel
         this.hide();
@@ -48,14 +52,14 @@ export class SidebarViewContainer {
         });
     }
     hide() {
-        this.showHide('0%');
+        this.showHide('0%', true);
         this.views.forEach((view) => {
             view.hide();
         });
         this.bIsShowing = false;
         this.listeners.forEach((listener) => listener.nowHidden(this));
     }
-    show() {
+    show(pushContent = false) {
         let size = this.prefs.expandedSize;
         if (window.outerWidth < 769) {
             size = '50%';
@@ -67,7 +71,7 @@ export class SidebarViewContainer {
             size = '100%';
         }
         sbvcLogger(`size: ${size}, agent: ${navigator.userAgent}`);
-        this.showHide(size);
+        this.showHide(size, pushContent);
         this.views.forEach((view) => {
             view.show();
         });
@@ -105,25 +109,42 @@ export class SidebarViewContainer {
     }
     collectionChanged(view) {
     }
-    showHide(newStyleValue) {
+    showHide(newStyleValue, pushContent = false) {
         const sidePanelEl = document.getElementById(this.prefs.id);
+        const mainPanelEl = document.getElementById(this.mainDivId);
         if (sidePanelEl === null)
             return;
         switch (this.prefs.location) {
             case SidebarLocation.left: {
                 sidePanelEl.style.width = newStyleValue;
+                if (pushContent) {
+                    if (mainPanelEl)
+                        mainPanelEl.style.marginLeft = newStyleValue;
+                }
                 break;
             }
             case SidebarLocation.right: {
                 sidePanelEl.style.width = newStyleValue;
+                if (pushContent) {
+                    if (mainPanelEl)
+                        mainPanelEl.style.marginLeft = newStyleValue;
+                }
                 break;
             }
             case SidebarLocation.bottom: {
                 sidePanelEl.style.height = newStyleValue;
+                if (pushContent) {
+                    if (mainPanelEl)
+                        mainPanelEl.style.marginLeft = newStyleValue;
+                }
                 break;
             }
             case SidebarLocation.top: {
                 sidePanelEl.style.height = newStyleValue;
+                if (pushContent) {
+                    if (mainPanelEl)
+                        mainPanelEl.style.marginLeft = newStyleValue;
+                }
                 break;
             }
         }

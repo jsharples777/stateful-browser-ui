@@ -15,6 +15,7 @@ export class SidebarViewContainer implements CollectionViewListener, ViewContain
     protected views: View[];
     protected bIsShowing: boolean = false;
     protected listeners: ContainerVisibilityListener[] = [];
+    protected mainDivId:string = 'root';
 
     public constructor(prefs: SidebarPrefs) {
         this.prefs = prefs;
@@ -47,6 +48,10 @@ export class SidebarViewContainer implements CollectionViewListener, ViewContain
         view.addEventListener(this);
     }
 
+    public setMainDivId(mainDivId:string):void {
+        this.mainDivId = mainDivId;
+    }
+
 
     public onDocumentLoaded() { // this should be called once at startup
         // hide the side bar panel
@@ -68,7 +73,7 @@ export class SidebarViewContainer implements CollectionViewListener, ViewContain
     }
 
     public hide() {
-        this.showHide('0%');
+        this.showHide('0%',true);
         this.views.forEach((view) => {
             view.hide();
         })
@@ -76,7 +81,7 @@ export class SidebarViewContainer implements CollectionViewListener, ViewContain
         this.listeners.forEach((listener) => listener.nowHidden(this));
     }
 
-    public show() {//414,768,1024
+    public show(pushContent:boolean = false) {//414,768,1024
         let size = this.prefs.expandedSize;
         if (window.outerWidth < 769) {
             size = '50%';
@@ -88,7 +93,7 @@ export class SidebarViewContainer implements CollectionViewListener, ViewContain
             size = '100%';
         }
         sbvcLogger(`size: ${size}, agent: ${navigator.userAgent}`);
-        this.showHide(size);
+        this.showHide(size,pushContent);
         this.views.forEach((view) => {
             view.show();
         })
@@ -141,25 +146,38 @@ export class SidebarViewContainer implements CollectionViewListener, ViewContain
 
     }
 
-    private showHide(newStyleValue: string): void {
+    private showHide(newStyleValue: string,pushContent:boolean = false): void {
         const sidePanelEl = document.getElementById(this.prefs.id);
+        const mainPanelEl = document.getElementById(this.mainDivId);
         if (sidePanelEl === null) return;
 
         switch (this.prefs.location) {
             case SidebarLocation.left: {
                 sidePanelEl.style.width = newStyleValue;
+                if (pushContent) {
+                    if (mainPanelEl) mainPanelEl.style.marginLeft = newStyleValue;
+                }
                 break;
             }
             case SidebarLocation.right: {
                 sidePanelEl.style.width = newStyleValue;
+                if (pushContent) {
+                    if (mainPanelEl) mainPanelEl.style.marginLeft = newStyleValue;
+                }
                 break;
             }
             case SidebarLocation.bottom: {
                 sidePanelEl.style.height = newStyleValue;
+                if (pushContent) {
+                    if (mainPanelEl) mainPanelEl.style.marginLeft = newStyleValue;
+                }
                 break;
             }
             case SidebarLocation.top: {
                 sidePanelEl.style.height = newStyleValue;
+                if (pushContent) {
+                    if (mainPanelEl) mainPanelEl.style.marginLeft = newStyleValue;
+                }
                 break;
             }
         }

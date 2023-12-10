@@ -12,6 +12,7 @@ type SidebarLocationItem = {
 export class SidebarManager {
     private static _instance: SidebarManager;
     private sidebars: SidebarLocationItem[] = [];
+    private mainDivId:string = 'root'
 
     private constructor() {
     }
@@ -23,11 +24,16 @@ export class SidebarManager {
         return SidebarManager._instance;
     }
 
-    public addSidebar(name: string, sidebar: SidebarViewContainer, location: SidebarLocation) {
-        this.sidebars.push({name, sidebar, location, isShowing: false});
+    public setMainDivId(mainDivId:string):void {
+        this.mainDivId = mainDivId;
     }
 
-    public showSidebar(name: string) {
+    public addSidebar(name: string, sidebar: SidebarViewContainer, location: SidebarLocation) {
+        this.sidebars.push({name, sidebar, location, isShowing: false});
+        sidebar.setMainDivId(this.mainDivId);
+    }
+
+    public showSidebar(name: string,pushContentOver:boolean = false) {
         const foundIndex = this.sidebars.findIndex((config) => config.name === name);
         if (foundIndex >= 0) {
             const config = this.sidebars[foundIndex];
@@ -39,7 +45,7 @@ export class SidebarManager {
                     }
                 }
             });
-            config.sidebar.show();
+            config.sidebar.show(pushContentOver);
             config.isShowing = true;
         }
     }

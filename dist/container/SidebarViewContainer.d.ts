@@ -9,14 +9,16 @@ export declare class SidebarViewContainer implements CollectionViewListener, Vie
     protected views: View[];
     protected bIsShowing: boolean;
     protected listeners: ContainerVisibilityListener[];
+    protected mainDivId: string;
     constructor(prefs: SidebarPrefs);
     addVisibilityListener(listener: ContainerVisibilityListener): void;
     addListener(listener: ContainerVisibilityListener): void;
     isShowing(): boolean;
     addView(view: View, config: SidebarViewConfig): void;
+    setMainDivId(mainDivId: string): void;
     onDocumentLoaded(): void;
     hide(): void;
-    show(): void;
+    show(pushContent?: boolean): void;
     documentLoaded(view: View): void;
     itemAction(view: View, actionName: string, selectedItem: any): void;
     canDeleteItem(view: View, selectedItem: any): boolean;

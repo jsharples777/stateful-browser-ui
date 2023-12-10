@@ -1,6 +1,7 @@
 export class SidebarManager {
     constructor() {
         this.sidebars = [];
+        this.mainDivId = 'root';
     }
     static getInstance() {
         if (!(SidebarManager._instance)) {
@@ -8,10 +9,14 @@ export class SidebarManager {
         }
         return SidebarManager._instance;
     }
+    setMainDivId(mainDivId) {
+        this.mainDivId = mainDivId;
+    }
     addSidebar(name, sidebar, location) {
         this.sidebars.push({ name, sidebar, location, isShowing: false });
+        sidebar.setMainDivId(this.mainDivId);
     }
-    showSidebar(name) {
+    showSidebar(name, pushContentOver = false) {
         const foundIndex = this.sidebars.findIndex((config) => config.name === name);
         if (foundIndex >= 0) {
             const config = this.sidebars[foundIndex];
@@ -23,7 +28,7 @@ export class SidebarManager {
                     }
                 }
             });
-            config.sidebar.show();
+            config.sidebar.show(pushContentOver);
             config.isShowing = true;
         }
     }
