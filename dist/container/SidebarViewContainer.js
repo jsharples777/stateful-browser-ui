@@ -109,6 +109,30 @@ export class SidebarViewContainer {
     }
     collectionChanged(view) {
     }
+    pushContent(mainPanelEl, newStyleValue, pushContent) {
+        if (pushContent) {
+            if (mainPanelEl) {
+                switch (this.prefs.location) {
+                    case SidebarLocation.left: {
+                        mainPanelEl.style.marginLeft = newStyleValue;
+                        break;
+                    }
+                    case SidebarLocation.right: {
+                        mainPanelEl.style.marginRight = newStyleValue;
+                        break;
+                    }
+                    case SidebarLocation.top: {
+                        mainPanelEl.style.marginTop = newStyleValue;
+                        break;
+                    }
+                    case SidebarLocation.bottom: {
+                        mainPanelEl.style.marginBottom = newStyleValue;
+                        break;
+                    }
+                }
+            }
+        }
+    }
     showHide(newStyleValue, pushContent = false) {
         const sidePanelEl = document.getElementById(this.prefs.id);
         const mainPanelEl = document.getElementById(this.mainDivId);
@@ -117,34 +141,22 @@ export class SidebarViewContainer {
         switch (this.prefs.location) {
             case SidebarLocation.left: {
                 sidePanelEl.style.width = newStyleValue;
-                if (pushContent) {
-                    if (mainPanelEl)
-                        mainPanelEl.style.marginLeft = newStyleValue;
-                }
+                this.pushContent(mainPanelEl, newStyleValue, pushContent);
                 break;
             }
             case SidebarLocation.right: {
                 sidePanelEl.style.width = newStyleValue;
-                if (pushContent) {
-                    if (mainPanelEl)
-                        mainPanelEl.style.marginLeft = newStyleValue;
-                }
+                this.pushContent(mainPanelEl, newStyleValue, pushContent);
                 break;
             }
             case SidebarLocation.bottom: {
                 sidePanelEl.style.height = newStyleValue;
-                if (pushContent) {
-                    if (mainPanelEl)
-                        mainPanelEl.style.marginLeft = newStyleValue;
-                }
+                this.pushContent(mainPanelEl, newStyleValue, pushContent);
                 break;
             }
             case SidebarLocation.top: {
                 sidePanelEl.style.height = newStyleValue;
-                if (pushContent) {
-                    if (mainPanelEl)
-                        mainPanelEl.style.marginLeft = newStyleValue;
-                }
+                this.pushContent(mainPanelEl, newStyleValue, pushContent);
                 break;
             }
         }

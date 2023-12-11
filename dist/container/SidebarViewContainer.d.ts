@@ -31,5 +31,6 @@ export declare class SidebarViewContainer implements CollectionViewListener, Vie
     hideRequested(view: View): void;
     canSelectItem(view: CollectionView, selectedItem: any): boolean;
     collectionChanged(view: CollectionView): void;
+    private pushContent;
     private showHide;
 }
