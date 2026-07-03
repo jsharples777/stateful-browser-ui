@@ -678,13 +678,12 @@ export class DefaultItemView {
         this.factoryElements.fields.forEach((fieldEl) => {
             fieldEl.addEventListener('keyup', (event) => {
                 if (event.metaKey || event.altKey || event.ctrlKey) {
-                    console.log(`key up ${event.key} in Item View ${this.getName()} BUT with metaKey/alt/ctrl`);
+                    dlogger(`key up ${event.key} in Item View ${this.getName()} BUT with metaKey/alt/ctrl`);
                 }
                 else if ((event.key === 'Meta') || (event.key === 'Control')) {
-                    console.log(`key up ${event.key} in Item View ${this.getName()} BUT with metaKey/ctrl`);
+                    dlogger(`key up ${event.key} in Item View ${this.getName()} BUT with metaKey/ctrl`);
                 }
                 else {
-                    console.log(`key up ${event.key} in Item View ${this.getName()}`);
                     dlogger(`key up in Item View ${this.getName()}`);
                     this.hasChangedBoolean = true;
                     this.setUnsavedMessage();
@@ -696,10 +695,10 @@ export class DefaultItemView {
         this.factoryElements.textFields.forEach((fieldEl) => {
             fieldEl.addEventListener('keyup', (event) => {
                 if (event.metaKey || event.altKey || event.ctrlKey) {
-                    console.log(`key up ${event.key} in Item View ${this.getName()} BUT with metaKey/alt/ctrl`);
+                    dlogger(`key up ${event.key} in Item View ${this.getName()} BUT with metaKey/alt/ctrl`);
                 }
                 else if ((event.key === 'Meta') || (event.key === 'Control')) {
-                    console.log(`key up ${event.key} in Item View ${this.getName()} BUT with metaKey/ctrl`);
+                    dlogger(`key up ${event.key} in Item View ${this.getName()} BUT with metaKey/ctrl`);
                 }
                 else {
                     dlogger(`key up ${event.key} in Item View ${this.getName()}`);
