@@ -769,9 +769,10 @@ export class DefaultItemView implements ItemView, ItemViewListener, AlertListene
             fieldEl.addEventListener('keyup', (event) => {
 
                 if (event.metaKey || event.altKey || event.ctrlKey) {
-
+                    console.log(`key up ${event.key} in Item View ${this.getName()} BUT with metaKey/alt/ctrl`);
                 }
                 else {
+                    console.log(`key up ${event.key} in Item View ${this.getName()}`);
                     dlogger(`key up in Item View ${this.getName()}`);
                     this.hasChangedBoolean = true;
                     this.setUnsavedMessage();
@@ -784,10 +785,10 @@ export class DefaultItemView implements ItemView, ItemViewListener, AlertListene
         this.factoryElements.textFields.forEach((fieldEl) => {
             fieldEl.addEventListener('keyup', (event) => {
                 if (event.metaKey || event.altKey || event.ctrlKey) {
-
+                    console.log(`key up ${event.key} in Item View ${this.getName()} BUT with metaKey/alt/ctrl`);
                 }
                 else {
-                    dlogger(`key up in Item View ${this.getName()}`);
+                    dlogger(`key up ${event.key} in Item View ${this.getName()}`);
                     this.hasChangedBoolean = true;
                     this.setUnsavedMessage();
                 }
