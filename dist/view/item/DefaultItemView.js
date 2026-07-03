@@ -677,18 +677,26 @@ export class DefaultItemView {
         logger(`Converting field input elements to Field objects`);
         this.factoryElements.fields.forEach((fieldEl) => {
             fieldEl.addEventListener('keyup', (event) => {
-                dlogger(`key up in Item View ${this.getName()}`);
-                this.hasChangedBoolean = true;
-                this.setUnsavedMessage();
+                if (event.metaKey || event.altKey || event.ctrlKey) {
+                }
+                else {
+                    dlogger(`key up in Item View ${this.getName()}`);
+                    this.hasChangedBoolean = true;
+                    this.setUnsavedMessage();
+                }
             });
             this.setupFieldObject(fieldEl);
         });
         logger(`Converting field text area elements to Field objects`);
         this.factoryElements.textFields.forEach((fieldEl) => {
             fieldEl.addEventListener('keyup', (event) => {
-                dlogger(`key up in Item View ${this.getName()}`);
-                this.hasChangedBoolean = true;
-                this.setUnsavedMessage();
+                if (event.metaKey || event.altKey || event.ctrlKey) {
+                }
+                else {
+                    dlogger(`key up in Item View ${this.getName()}`);
+                    this.hasChangedBoolean = true;
+                    this.setUnsavedMessage();
+                }
             });
             this.setupFieldObject(fieldEl);
         });
